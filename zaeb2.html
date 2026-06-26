@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>بازی ضرب عدد ۲</title>
+<style>
+body{
+font-family:tahoma;
+background:#87CEEB;
+text-align:center;
+padding:30px;
+}
+.box{
+background:white;
+padding:20px;
+border-radius:15px;
+width:350px;
+margin:auto;
+box-shadow:0 0 10px gray;
+}
+input{
+font-size:20px;
+width:100px;
+text-align:center;
+}
+button{
+padding:10px 20px;
+font-size:18px;
+margin-top:15px;
+cursor:pointer;
+}
+#result{
+font-size:22px;
+margin-top:20px;
+font-weight:bold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+<h2>🎮 بازی آموزش ضرب عدد ۲</h2>
+
+<h1 id="question"></h1>
+
+<input type="number" id="answer">
+
+<br><br>
+
+<button onclick="check()">بررسی جواب</button>
+
+<h2 id="result"></h2>
+
+<p>امتیاز: <span id="score">0</span></p>
+
+</div>
+
+<script>
+
+let score=0;
+let n;
+
+function newQuestion(){
+n=Math.floor(Math.random()*10)+1;
+document.getElementById("question").innerHTML=
+"2 × "+n+" = ؟";
+document.getElementById("answer").value="";
+}
+
+function check(){
+
+let ans=parseInt(document.getElementById("answer").value);
+
+if(ans==2*n){
+score++;
+document.getElementById("result").innerHTML="✅ آفرین! درست بود.";
+}else{
+document.getElementById("result").innerHTML=
+"❌ جواب درست: "+(2*n);
+}
+
+document.getElementById("score").innerHTML=score;
+
+setTimeout(newQuestion,1200);
+
+}
+
+newQuestion();
+
+</script>
+
+</body>
+</html>
+
