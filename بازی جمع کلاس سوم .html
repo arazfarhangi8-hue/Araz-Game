@@ -1,0 +1,123 @@
+<meta name='viewport' content='width=device-width, initial-scale=1'/><!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>بازی کلاس سوم</title>
+
+<style>
+body{
+    font-family:tahoma;
+    text-align:center;
+    background:linear-gradient(45deg,#ff0000,#ff9900,#ffff00,#00ff00,#00ccff,#0000ff,#cc00ff);
+    background-size:400% 400%;
+    animation:bg 8s infinite;
+    color:white;
+}
+
+@keyframes bg{
+    0%{background-position:0% 50%;}
+    50%{background-position:100% 50%;}
+    100%{background-position:0% 50%;}
+}
+
+.box{
+    background:rgba(0,0,0,0.4);
+    margin:50px auto;
+    padding:20px;
+    border-radius:20px;
+    width:80%;
+    max-width:500px;
+}
+
+input{
+    font-size:24px;
+    padding:10px;
+    width:100px;
+    text-align:center;
+}
+
+button{
+    font-size:22px;
+    padding:10px 20px;
+    margin:10px;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+}
+
+#score{
+    font-size:32px;
+    color:yellow;
+}
+
+#message{
+    font-size:28px;
+    margin-top:20px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+<h1>🌟 بازی ریاضی کلاس سوم 🌟</h1>
+
+<h2 id="question">2 + 2 = ؟</h2>
+
+<input type="number" id="answer">
+
+<br>
+
+<button onclick="checkAnswer()">جواب بده</button>
+
+<h2>امتیاز: <span id="score">0</span></h2>
+
+<div id="message"></div>
+</div>
+
+<script>
+let score = 0;
+
+function newQuestion(){
+    let a = Math.floor(Math.random()*10)+1;
+    let b = Math.floor(Math.random()*10)+1;
+
+    document.getElementById("question").innerText =
+        a + " + " + b + " = ؟";
+
+    window.correctAnswer = a + b;
+}
+
+function checkAnswer(){
+    let answer = Number(document.getElementById("answer").value);
+
+    if(answer === window.correctAnswer){
+        score += 10;
+        document.getElementById("message").innerHTML =
+        "✅ آفرین! جواب درست بود.";
+    }else{
+        score -= 5;
+        if(score < 0) score = 0;
+
+        document.getElementById("message").innerHTML =
+        "❌ اشتباه بود!";
+    }
+
+    document.getElementById("score").innerText = score;
+
+    if(score >= 150){
+        document.getElementById("message").innerHTML =
+        "🏆🎉 برنده شدی! امتیازت به 150 رسید!";
+    }else{
+        newQuestion();
+    }
+
+    document.getElementById("answer").value = "";
+}
+
+newQuestion();
+</script>
+
+</body>
+</html>
