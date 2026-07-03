@@ -1,14 +1,11 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
-
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>🎮 شروع بازی | Araz Game</title>
 
 <style>
-
 body{
     margin:0;
     font-family:Tahoma,sans-serif;
@@ -19,15 +16,14 @@ body{
 header{
     background:linear-gradient(90deg,#0066ff,#ffffff,#ff3333);
     padding:30px;
-    color:black;
 }
 
 .box{
     background:white;
-    padding:20px;
-    border-radius:15px;
     width:350px;
     margin:30px auto;
+    padding:20px;
+    border-radius:15px;
     box-shadow:0 0 10px gray;
 }
 
@@ -56,7 +52,6 @@ button:hover{
     margin-top:20px;
     font-weight:bold;
 }
-
 </style>
 </head>
 
@@ -69,7 +64,7 @@ button:hover{
 
 <div class="box">
 
-<h2>🎮 بازی آموزش ضرب عدد ۲</h2>
+<h2>🎲 بازی ضرب عدد ۲</h2>
 
 <h1 id="question"></h1>
 
@@ -92,35 +87,30 @@ button:hover{
 </div>
 
 <script>
-
-let score=0;
+let score = 0;
 let n;
 
 function newQuestion(){
-    n=Math.floor(Math.random()*10)+1;
-    document.getElementById("question").innerHTML="2 × "+n+" = ؟";
-    document.getElementById("answer").value="";
+    n = Math.floor(Math.random()*10)+1;
+    document.getElementById("question").innerHTML = "2 × " + n + " = ؟";
+    document.getElementById("answer").value = "";
 }
 
 function check(){
+    let ans = parseInt(document.getElementById("answer").value);
 
-    let ans=parseInt(document.getElementById("answer").value);
-
-    if(ans==2*n){
+    if(ans === 2*n){
         score++;
-        document.getElementById("result").innerHTML="✅ آفرین! درست بود.";
+        document.getElementById("result").innerHTML = "✅ آفرین!";
     }else{
-        document.getElementById("result").innerHTML="❌ جواب درست: "+(2*n);
+        document.getElementById("result").innerHTML = "❌ جواب درست: " + (2*n);
     }
 
-    document.getElementById("score").innerHTML=score;
-
+    document.getElementById("score").innerHTML = score;
     setTimeout(newQuestion,1200);
-
 }
 
 newQuestion();
-
 </script>
 
 </body>
