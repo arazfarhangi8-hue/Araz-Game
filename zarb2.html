@@ -1,45 +1,74 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
+
 <head>
 <meta charset="UTF-8">
-<title>بازی ضرب عدد ۲</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>🎮 شروع بازی | Araz Game</title>
+
 <style>
+
 body{
-font-family:tahoma;
-background:#87CEEB;
-text-align:center;
-padding:30px;
+    margin:0;
+    font-family:Tahoma,sans-serif;
+    background:#f5f9ff;
+    text-align:center;
 }
+
+header{
+    background:linear-gradient(90deg,#0066ff,#ffffff,#ff3333);
+    padding:30px;
+    color:black;
+}
+
 .box{
-background:white;
-padding:20px;
-border-radius:15px;
-width:350px;
-margin:auto;
-box-shadow:0 0 10px gray;
+    background:white;
+    padding:20px;
+    border-radius:15px;
+    width:350px;
+    margin:30px auto;
+    box-shadow:0 0 10px gray;
 }
+
 input{
-font-size:20px;
-width:100px;
-text-align:center;
+    font-size:20px;
+    width:100px;
+    text-align:center;
 }
+
 button{
-padding:10px 20px;
-font-size:18px;
-margin-top:15px;
-cursor:pointer;
+    background:#0066ff;
+    color:white;
+    border:none;
+    padding:10px 20px;
+    border-radius:10px;
+    font-size:18px;
+    cursor:pointer;
 }
+
+button:hover{
+    background:#0044aa;
+}
+
 #result{
-font-size:22px;
-margin-top:20px;
-font-weight:bold;
+    font-size:22px;
+    margin-top:20px;
+    font-weight:bold;
 }
+
 </style>
 </head>
 
 <body>
 
+<header>
+<h1>🎮 شروع بازی</h1>
+<p>بازی آموزش ضرب عدد ۲</p>
+</header>
+
 <div class="box">
+
 <h2>🎮 بازی آموزش ضرب عدد ۲</h2>
 
 <h1 id="question"></h1>
@@ -49,6 +78,12 @@ font-weight:bold;
 <br><br>
 
 <button onclick="check()">بررسی جواب</button>
+
+<br><br>
+
+<button onclick="location.href='index.html'">
+🏠 بازگشت به صفحه اصلی
+</button>
 
 <h2 id="result"></h2>
 
@@ -62,27 +97,25 @@ let score=0;
 let n;
 
 function newQuestion(){
-n=Math.floor(Math.random()*10)+1;
-document.getElementById("question").innerHTML=
-"2 × "+n+" = ؟";
-document.getElementById("answer").value="";
+    n=Math.floor(Math.random()*10)+1;
+    document.getElementById("question").innerHTML="2 × "+n+" = ؟";
+    document.getElementById("answer").value="";
 }
 
 function check(){
 
-let ans=parseInt(document.getElementById("answer").value);
+    let ans=parseInt(document.getElementById("answer").value);
 
-if(ans==2*n){
-score++;
-document.getElementById("result").innerHTML="✅ آفرین! درست بود.";
-}else{
-document.getElementById("result").innerHTML=
-"❌ جواب درست: "+(2*n);
-}
+    if(ans==2*n){
+        score++;
+        document.getElementById("result").innerHTML="✅ آفرین! درست بود.";
+    }else{
+        document.getElementById("result").innerHTML="❌ جواب درست: "+(2*n);
+    }
 
-document.getElementById("score").innerHTML=score;
+    document.getElementById("score").innerHTML=score;
 
-setTimeout(newQuestion,1200);
+    setTimeout(newQuestion,1200);
 
 }
 
@@ -92,4 +125,3 @@ newQuestion();
 
 </body>
 </html>
-
