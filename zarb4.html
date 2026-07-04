@@ -59,12 +59,12 @@ button:hover{
 
 <header>
 <h1>🎮 شروع بازی</h1>
-<p>بازی آموزش ضرب عدد ۳</p>
+<p>بازی آموزش ضرب عدد ۴</p>
 </header>
 
 <div class="box">
 
-<h2>🎲 بازی ضرب عدد ۳</h2>
+<h2>🎲 بازی ضرب عدد ۴</h2>
 
 <h1 id="question"></h1>
 
@@ -92,18 +92,18 @@ let n;
 
 function newQuestion(){
     n = Math.floor(Math.random()*10)+1;
-    document.getElementById("question").innerHTML = "3 × " + n + " = ؟";
+    document.getElementById("question").innerHTML = "4 × " + n + " = ؟";
     document.getElementById("answer").value = "";
 }
 
 function check(){
     let ans = parseInt(document.getElementById("answer").value);
 
-    if(ans === 3*n){
+    if(ans === 4*n){
         score++;
         document.getElementById("result").innerHTML = "✅ آفرین!";
     }else{
-        document.getElementById("result").innerHTML = "❌ جواب درست: " + (3*n);
+        document.getElementById("result").innerHTML = "❌ جواب درست: " + (4*n);
     }
 
     document.getElementById("score").innerHTML = score;
