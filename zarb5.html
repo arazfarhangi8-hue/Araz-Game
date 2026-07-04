@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🎮 بازی ضرب ۴ | Araz Game</title>
+<title>🎮 بازی ضرب ۵ | Araz Game</title>
 
 <style>
 body{
@@ -59,12 +59,12 @@ button:hover{
 
 <header>
 <h1>🎮 شروع بازی</h1>
-<p>بازی آموزش ضرب عدد ۴</p>
+<p>بازی آموزش ضرب عدد ۵</p>
 </header>
 
 <div class="box">
 
-<h2>🎲 بازی ضرب عدد ۴</h2>
+<h2>🎲 بازی ضرب عدد ۵</h2>
 
 <h1 id="question"></h1>
 
@@ -92,18 +92,18 @@ let n;
 
 function newQuestion(){
     n = Math.floor(Math.random()*10)+1;
-    document.getElementById("question").innerHTML = "4 × " + n + " = ؟";
+    document.getElementById("question").innerHTML = "5 × " + n + " = ؟";
     document.getElementById("answer").value = "";
 }
 
 function check(){
     let ans = parseInt(document.getElementById("answer").value);
 
-    if(ans === 4*n){
+    if(ans === 5*n){
         score++;
         document.getElementById("result").innerHTML = "✅ آفرین!";
     }else{
-        document.getElementById("result").innerHTML = "❌ جواب درست: " + (4*n);
+        document.getElementById("result").innerHTML = "❌ جواب درست: " + (5*n);
     }
 
     document.getElementById("score").innerHTML = score;
