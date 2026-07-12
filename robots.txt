@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://arazfarhangi8-hue.github.io/Araz-Game/sitemap.xml
