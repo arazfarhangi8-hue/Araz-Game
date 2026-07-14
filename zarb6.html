@@ -128,3 +128,77 @@ font-weight:bold;
 <br><br>
 
 <button onclick="check()">✅ بررسی جواب</button>
+ <br><br>
+
+<button onclick="location.href='zarb5.html'">⬅ ضرب ۵</button>
+
+<button onclick="location.href='zarb7.html'">ضرب ۷ ➡</button>
+
+<br><br>
+
+<button onclick="location.href='start.html'">
+🎮 انتخاب بازی
+</button>
+
+<button onclick="location.href='index.html'">
+🏠 صفحه اصلی
+</button>
+
+<h2 id="result"></h2>
+
+<p>
+⭐ امتیاز:
+<span id="score">0</span>
+</p>
+
+</div>
+
+<script>
+
+let score = 0;
+let n;
+
+function newQuestion(){
+
+    n = Math.floor(Math.random()*10)+1;
+
+    document.getElementById("question").innerHTML =
+    "6 × " + n + " = ؟";
+
+    document.getElementById("answer").value = "";
+
+    document.getElementById("answer").focus();
+
+}
+
+function check(){
+
+    let ans =
+    parseInt(document.getElementById("answer").value);
+
+    if(ans === 6*n){
+
+        score++;
+
+        document.getElementById("result").innerHTML =
+        "✅ آفرین! جواب درست است.";
+
+    }else{
+
+        document.getElementById("result").innerHTML =
+        "❌ جواب صحیح: " + (6*n);
+
+    }
+
+    document.getElementById("score").innerHTML = score;
+
+    setTimeout(newQuestion,1000);
+
+}
+
+newQuestion();
+
+</script>
+
+</body>
+</html>
