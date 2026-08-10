@@ -131,39 +131,7 @@ footer{
 <div class="topmenu">
 <a href="index.html">🏠 خانه</a>
 <a href="about.html">👤 درباره من</a>
-
-<script>
-function openGmail(event) {
-    event.preventDefault();
-
-    const email = "arazfarhangi8@gmail.com";
-
-    // گوشی و تبلت اندرویدی
-    if (/Android/i.test(navigator.userAgent)) {
-        const intentUrl =
-            "intent://co?to=" + encodeURIComponent(email) +
-            "#Intent;scheme=mailto;package=com.google.android.gm;end";
-
-        window.location.href = intentUrl;
-
-        // اگر Gmail باز نشد، نسخه وب را باز کن
-        setTimeout(function () {
-            window.location.href =
-                "https://mail.google.com/mail/?view=cm&fs=1&to=" +
-                encodeURIComponent(email);
-        }, 1500);
-
-    } else {
-        // کامپیوتر و لپ‌تاپ
-        window.open(
-            "https://mail.google.com/mail/?view=cm&fs=1&to=" +
-            encodeURIComponent(email),
-            "_blank"
-        );
-    }
-}
-</script>
- <a href="contact.html">☎ تماس با ما</a>
+<a href="contact.html">☎ تماس با ما</a>
 </div>
 
 <header>
