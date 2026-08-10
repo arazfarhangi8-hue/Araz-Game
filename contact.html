@@ -11,7 +11,60 @@
 <p>شماره تماس:
 <a href="tel:09368552107">09368552107</a>
 </p>
+    
+<!-- تماس با ما -->
 
+<div style="margin-top: 30px; text-align: center;">
+
+  <a href="#" onclick="openGmail(event)"
+     style="
+       display:inline-block;
+       padding:12px 24px;
+       background:#4285F4;
+       color:white;
+       text-decoration:none;
+       border-radius:8px;
+       font-size:16px;
+       font-weight:bold;
+     ">
+    📧 ارسال ایمیل
+  </a>
+
+</div>
+
+<script>
+function openGmail(event) {
+    event.preventDefault();
+
+    const email = "arazfarhangi8@gmail.com";
+
+    if (/Android/i.test(navigator.userAgent)) {
+
+        const intentUrl =
+            "intent://co?to=" + encodeURIComponent(email) +
+            "#Intent;scheme=mailto;package=com.google.android.gm;end";
+
+        window.location.href = intentUrl;
+
+        setTimeout(function () {
+            window.location.href =
+                "https://mail.google.com/mail/?view=cm&fs=1&to=" +
+                encodeURIComponent(email);
+        }, 1500);
+
+    } else {
+
+        window.open(
+            "https://mail.google.com/mail/?view=cm&fs=1&to=" +
+            encodeURIComponent(email),
+            "_blank"
+        );
+
+    }
+}
+</p>
+    
+</script>
 <p><a href="index.html">بازگشت به صفحه اصلی</a></p>
 
 </body>
