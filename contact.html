@@ -1,102 +1,110 @@
-```html
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="fa">
 <head>
     <meta charset="UTF-8">
     <title>☎ تماس با ما</title>
+    <style>
+        .blue-button {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #4285F4;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            margin: 6px 0;
+        }
+    </style>
 </head>
-
 <body>
 
-    <h1>تماس با ما</h1>
+<h1>تماس با ما</h1>
 
-    <!-- دکمه شماره تماس -->
-    <a href="tel:09368552107"
-       style="
-           display:inline-block;
-           padding:12px 24px;
-           background:#4285F4;
-           color:white;
-           text-decoration:none;
-           border-radius:8px;
-           font-size:16px;
-           font-weight:bold;
-           direction:rtl;
-       ">
-        📞 <span>شماره تماس:</span>
-        <span dir="ltr">09368552107</span>
-    </a>
+<p>شماره تماس:
+<a href="tel:09368552107" class="blue-button">📞 09368552107</a>
+</p>
 
-    <br><br>
+    <a href="#" onclick="openGmail(event)"
+   style="
+     display:inline-block;
+     padding:12px 24px;
+     background:#4285F4;
+     color:white;
+     text-decoration:none;
+     border-radius:8px;
+     font-size:16px;
+     font-weight:bold;
+   ">
+   📧 ارسال ایمیل
+</a>
 
-    <!-- دکمه ارسال ایمیل -->
-    <a href="#"
-       onclick="openGmail(event)"
-       style="
-           display:inline-block;
-           padding:12px 24px;
-           background:#4285F4;
-           color:white;
-           text-decoration:none;
-           border-radius:8px;
-           font-size:16px;
-           font-weight:bold;
-       ">
-        📧 ارسال ایمیل
-    </a>
+<script>
+function openGmail(event) {
+    event.preventDefault();
 
-    <br><br>
+    const email = "arazfarhangi8@gmail.com";
 
-    <!-- دکمه بازگشت به صفحه اصلی -->
-    <a href="index.html"
-       style="
-           display:inline-block;
-           padding:12px 24px;
-           background:#4285F4;
-           color:white;
-           text-decoration:none;
-           border-radius:8px;
-           font-size:16px;
-           font-weight:bold;
-       ">
-        🏠 بازگشت به صفحه اصلی
-    </a>
+    // گوشی و تبلت اندرویدی
+    if (/Android/i.test(navigator.userAgent)) {
+        const intentUrl =
+            "intent://co?to=" + encodeURIComponent(email) +
+            "#Intent;scheme=mailto;package=com.google.android.gm;end";
 
+        window.location.href = intentUrl;
 
-    <script>
-    function openGmail(event) {
-        event.preventDefault();
-
-        const email = "arazfarhangi8@gmail.com";
-
-        // گوشی و تبلت اندرویدی
-        if (/Android/i.test(navigator.userAgent)) {
-
-            const intentUrl =
-                "intent://co?to=" + encodeURIComponent(email) +
-                "#Intent;scheme=mailto;package=com.google.android.gm;end";
-
-            window.location.href = intentUrl;
-
-            // اگر Gmail باز نشد، نسخه وب را باز کن
-            setTimeout(function () {
-                window.location.href =
-                    "https://mail.google.com/mail/?view=cm&fs=1&to=" +
-                    encodeURIComponent(email);
-            }, 1500);
-
-        } else {
-
-            // کامپیوتر و لپ‌تاپ
-            window.open(
+        // اگر Gmail باز نشد، نسخه وب را باز کن
+        setTimeout(function () {
+            window.location.href =
                 "https://mail.google.com/mail/?view=cm&fs=1&to=" +
-                encodeURIComponent(email),
-                "_blank"
-            );
-        }
+                encodeURIComponent(email);
+        }, 1500);
+
+    } else {
+        // کامپیوتر و لپ‌تاپ
+        window.open(
+            "https://mail.google.com/mail/?view=cm&fs=1&to=" +
+            encodeURIComponent(email),
+            "_blank"
+        );
     }
-    </script>
+}
+</script>
+
+<script>
+function openGmail(event) {
+    event.preventDefault();
+
+    const email = "arazfarhangi8@gmail.com";
+
+    if (/Android/i.test(navigator.userAgent)) {
+
+        const intentUrl =
+            "intent://co?to=" + encodeURIComponent(email) +
+            "#Intent;scheme=mailto;package=com.google.android.gm;end";
+
+        window.location.href = intentUrl;
+
+        setTimeout(function () {
+            window.location.href =
+                "https://mail.google.com/mail/?view=cm&fs=1&to=" +
+                encodeURIComponent(email);
+        }, 1500);
+
+    } else {
+
+        window.open(
+            "https://mail.google.com/mail/?view=cm&fs=1&to=" +
+            encodeURIComponent(email),
+            "_blank"
+        );
+
+    }
+}
+</p>
+    
+</script>
+<p><a href="index.html" class="blue-button">🏠 بازگشت به صفحه اصلی</a></p>
 
 </body>
 </html>
-```
