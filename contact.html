@@ -1,8 +1,10 @@
+```html
 <!DOCTYPE html>
 <html lang="fa">
 <head>
     <meta charset="UTF-8">
     <title>☎ تماس با ما</title>
+
     <style>
         .blue-button {
             display: inline-block;
@@ -15,28 +17,35 @@
             font-weight: bold;
             margin: 6px 0;
         }
+
+        .message-button {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #1976d2;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            margin-top: 15px;
+        }
     </style>
 </head>
+
 <body>
 
 <h1>تماس با ما</h1>
 
-<p>شماره تماس:
-<a href="tel:09368552107" class="blue-button">📞 09368552107</a>
+<p>
+    شماره تماس:
+    <a href="tel:09368552107" class="blue-button">
+        📞 09368552107
+    </a>
 </p>
 
-    <a href="#" onclick="openGmail(event)"
-   style="
-     display:inline-block;
-     padding:12px 24px;
-     background:#4285F4;
-     color:white;
-     text-decoration:none;
-     border-radius:8px;
-     font-size:16px;
-     font-weight:bold;
-   ">
-   📧 ارسال ایمیل
+<!-- ارسال ایمیل -->
+<a href="#" onclick="openGmail(event)" class="blue-button">
+    📧 ارسال ایمیل
 </a>
 
 <script>
@@ -45,15 +54,14 @@ function openGmail(event) {
 
     const email = "arazfarhangi8@gmail.com";
 
-    // گوشی و تبلت اندرویدی
     if (/Android/i.test(navigator.userAgent)) {
+
         const intentUrl =
             "intent://co?to=" + encodeURIComponent(email) +
             "#Intent;scheme=mailto;package=com.google.android.gm;end";
 
         window.location.href = intentUrl;
 
-        // اگر Gmail باز نشد، نسخه وب را باز کن
         setTimeout(function () {
             window.location.href =
                 "https://mail.google.com/mail/?view=cm&fs=1&to=" +
@@ -61,7 +69,7 @@ function openGmail(event) {
         }, 1500);
 
     } else {
-        // کامپیوتر و لپ‌تاپ
+
         window.open(
             "https://mail.google.com/mail/?view=cm&fs=1&to=" +
             encodeURIComponent(email),
@@ -71,60 +79,19 @@ function openGmail(event) {
 }
 </script>
 
-<script>
-function openGmail(event) {
-    event.preventDefault();
-
-    const email = "arazfarhangi8@gmail.com";
-
-    if (/Android/i.test(navigator.userAgent)) {
-
-        const intentUrl =
-            "intent://co?to=" + encodeURIComponent(email) +
-            "#Intent;scheme=mailto;package=com.google.android.gm;end";
-
-        window.location.href = intentUrl;
-
-        setTimeout(function () {
-            window.location.href =
-                "https://mail.google.com/mail/?view=cm&fs=1&to=" +
-                encodeURIComponent(email);
-        }, 1500);
-
-    } else {
-
-        window.open(
-            "https://mail.google.com/mail/?view=cm&fs=1&to=" +
-            encodeURIComponent(email),
-            "_blank"
-        );
-
-    }
-}
-    
-</p>
-
-<!-- ارسال پیامک -->
-<div style="text-align: center; margin-top: 15px;">
-  <a href="sms:09368552107"
-     style="
-       display: inline-block;
-       padding: 12px 24px;
-       background: #1976d2;
-       color: white;
-       text-decoration: none;
-       border-radius: 8px;
-       font-size: 16px;
-       font-weight: bold;
-     ">
-    💬 ارسال پیام
-  </a>
+<!-- ارسال پیام -->
+<div>
+    <a href="sms:09368552107" class="message-button">
+        💬 ارسال پیام
+    </a>
 </div>
-         
+
+<p>
+    <a href="index.html" class="blue-button">
+        🏠 بازگشت به صفحه اصلی
+    </a>
 </p>
-    
-</script>
-<p><a href="index.html" class="blue-button">🏠 بازگشت به صفحه اصلی</a></p>
 
 </body>
 </html>
+```
