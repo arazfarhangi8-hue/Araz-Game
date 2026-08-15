@@ -50,9 +50,7 @@ async function loadGallery(){
     if(!response.ok) throw new Error('GitHub API error');
 
     const files = await response.json();
-    const images = files.filter(file =>
-      file.type === 'file' && /\.(jpg|jpeg|png|gif|webp|bmp)$/i.test(file.name)
-    );
+    const images = files.filter(file => file.type === 'file' && /\.(jpg|jpeg|png|gif|webp|bmp)$/i.test(file.name));
 
     gallery.innerHTML = '';
 
@@ -61,28 +59,32 @@ async function loadGallery(){
       return;
     }
 
-    images.forEach((file, index) => {
-      const img = document.createElement('img');
-      img.src = file.download_url;
-      img.alt = 'عکس آراز ' + (index + 1);
-      img.loading = 'lazy';
-      img.onclick = () => openModal(file.download_url);
-      gallery.appendChild(img);
+    images.forEach((file,index)=>{
+      const card=document.createElement('div');
+      card.style.position='relative';
+
+      const img=document.createElement('img');
+      img.src=file.download_url;
+      img.alt='عکس آراز '+(index+1);
+      img.loading='lazy';
+      img.onclick=()=>openModal(file.download_url);
+
+      card.appendChild(img);
+      gallery.appendChild(card);
     });
   }catch(error){
     console.error(error);
-    gallery.innerHTML = '<div class="error">بارگذاری عکس‌ها با مشکل روبه‌رو شد. لطفاً صفحه را دوباره باز کنید.</div>';
+    gallery.innerHTML='<div class="error">بارگذاری عکس‌ها با مشکل روبه‌رو شد. لطفاً صفحه را دوباره باز کنید.</div>';
   }
 }
 
 function openModal(src){
-  modalImg.src = src;
+  modalImg.src=src;
   modal.classList.add('show');
 }
-
 function closeModal(){
   modal.classList.remove('show');
-  modalImg.src = '';
+  modalImg.src='';
 }
 
 loadGallery();
