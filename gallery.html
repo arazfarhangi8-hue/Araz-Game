@@ -66,19 +66,13 @@ let galleryImages = [];
 let currentIndex = 0;
 
 async function loadGallery(){
-  const apiUrl = 'https://api.github.com/repos/arazfarhangi8-hue/Araz-Game/contents/gallery1';
+  const galleryIndexUrl = 'https://raw.githubusercontent.com/arazfarhangi8-hue/Araz-Game/main/gallery.json';
   try{
-    const response = await fetch(apiUrl + '?t=' + Date.now(), {
-      headers: { 'Accept': 'application/vnd.github+json' },
-      cache: 'no-store'
-    });
-
-    if(!response.ok) throw new Error('GitHub API error');
+    const response = await fetch(galleryIndexUrl + '?t=' + Date.now(), {cache:'no-store'});
+    if(!response.ok) throw new Error('Gallery index error');
 
     const files = await response.json();
-    galleryImages = files.filter(file =>
-      file.type === 'file' && /\.(jpg|jpeg|png|gif|webp|bmp)$/i.test(file.name)
-    );
+    galleryImages = Array.isArray(files) ? files.filter(file => file && file.url) : [];
 
     gallery.innerHTML = '';
 
@@ -92,9 +86,10 @@ async function loadGallery(){
       card.style.position='relative';
 
       const img=document.createElement('img');
-      img.src=file.download_url;
+      img.src=file.url;
       img.alt='عکس آراز '+(index+1);
       img.loading='lazy';
+      img.onerror=()=>{ img.style.display='none'; };
       img.onclick=()=>openModal(index);
 
       card.appendChild(img);
@@ -118,7 +113,7 @@ function updateModal(){
   const currentImage = galleryImages[currentIndex];
   if(!currentImage) return;
 
-  modalImg.src=currentImage.download_url;
+  modalImg.src=currentImage.url;
   modalImg.alt='عکس آراز '+(currentIndex+1);
 
   prevBtn.disabled = currentIndex === 0;
