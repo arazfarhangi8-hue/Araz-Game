@@ -16,9 +16,23 @@ h1{text-align:center;color:#FFD700;margin-top:0}
 .gallery img:hover{transform:scale(1.04);box-shadow:0 10px 25px rgba(0,0,0,.35)}
 .modal{display:none;position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,.88);align-items:center;justify-content:center;padding:25px}
 .modal.show{display:flex}
-.modal img{max-width:95%;max-height:88vh;border-radius:16px;animation:zoom .25s ease}
-.close{position:absolute;top:18px;left:25px;font-size:40px;color:white;cursor:pointer}
+.modal img{max-width:85%;max-height:88vh;border-radius:16px;animation:zoom .25s ease;object-fit:contain}
+.close{position:absolute;top:18px;left:25px;font-size:40px;color:white;cursor:pointer;z-index:1003;line-height:1}
+.gallery-nav{position:absolute;top:50%;transform:translateY(-50%);width:56px;height:56px;border:0;border-radius:50%;background:rgba(255,255,255,.18);color:white;font-size:34px;font-weight:bold;cursor:pointer;z-index:1002;display:flex;align-items:center;justify-content:center;transition:background .2s,transform .2s,opacity .2s}
+.gallery-nav:hover:not(:disabled){background:rgba(255,215,0,.9);color:#1e3c72;transform:translateY(-50%) scale(1.08)}
+.gallery-nav:disabled{opacity:.25;cursor:not-allowed}
+.prev{right:22px}
+.next{left:22px}
+.photo-count{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);padding:7px 13px;border-radius:12px;background:rgba(0,0,0,.45);font-size:15px;z-index:1002}
 .loading,.empty,.error{text-align:center;padding:30px;color:#eee}
+@media(max-width:600px){
+  .modal{padding:15px}
+  .modal img{max-width:76%;max-height:82vh}
+  .gallery-nav{width:48px;height:48px;font-size:29px}
+  .prev{right:8px}
+  .next{left:8px}
+  .close{top:10px;left:14px;font-size:34px}
+}
 @keyframes zoom{from{transform:scale(.75);opacity:0}to{transform:scale(1);opacity:1}}
 </style>
 </head>
@@ -30,14 +44,23 @@ h1{text-align:center;color:#FFD700;margin-top:0}
 </div>
 
 <div class="modal" id="modal" onclick="closeModal()">
-<span class="close">&times;</span>
-<img id="modalImg" src="" alt="عکس بزرگ شد" onclick="event.stopPropagation()">
+  <span class="close" aria-label="بستن">&times;</span>
+  <button class="gallery-nav prev" id="prevBtn" type="button" aria-label="عکس قبلی" onclick="event.stopPropagation();showPrevious()">‹</button>
+  <img id="modalImg" src="" alt="عکس بزرگ شده" onclick="event.stopPropagation()">
+  <button class="gallery-nav next" id="nextBtn" type="button" aria-label="عکس بعدی" onclick="event.stopPropagation();showNext()">›</button>
+  <div class="photo-count" id="photoCount" aria-live="polite"></div>
 </div>
 
 <script>
 const gallery = document.getElementById('gallery');
 const modal = document.getElementById('modal');
 const modalImg = document.getElementById('modalImg');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const photoCount = document.getElementById('photoCount');
+
+let galleryImages = [];
+let currentIndex = 0;
 
 async function loadGallery(){
   const apiUrl = 'https://api.github.com/repos/arazfarhangi8-hue/Araz-Game/contents/gallery1';
@@ -50,16 +73,18 @@ async function loadGallery(){
     if(!response.ok) throw new Error('GitHub API error');
 
     const files = await response.json();
-    const images = files.filter(file => file.type === 'file' && /\.(jpg|jpeg|png|gif|webp|bmp)$/i.test(file.name));
+    galleryImages = files.filter(file =>
+      file.type === 'file' && /\.(jpg|jpeg|png|gif|webp|bmp)$/i.test(file.name)
+    );
 
     gallery.innerHTML = '';
 
-    if(images.length === 0){
+    if(galleryImages.length === 0){
       gallery.innerHTML = '<div class="empty">هنوز عکسی در گالری قرار نگرفته است. 📷</div>';
       return;
     }
 
-    images.forEach((file,index)=>{
+    galleryImages.forEach((file,index)=>{
       const card=document.createElement('div');
       card.style.position='relative';
 
@@ -67,7 +92,7 @@ async function loadGallery(){
       img.src=file.download_url;
       img.alt='عکس آراز '+(index+1);
       img.loading='lazy';
-      img.onclick=()=>openModal(file.download_url);
+      img.onclick=()=>openModal(index);
 
       card.appendChild(img);
       gallery.appendChild(card);
@@ -78,14 +103,53 @@ async function loadGallery(){
   }
 }
 
-function openModal(src){
-  modalImg.src=src;
+function openModal(index){
+  if(!galleryImages.length) return;
+  currentIndex = index;
+  updateModal();
   modal.classList.add('show');
+  document.body.style.overflow='hidden';
 }
+
+function updateModal(){
+  const currentImage = galleryImages[currentIndex];
+  if(!currentImage) return;
+
+  modalImg.src=currentImage.download_url;
+  modalImg.alt='عکس آراز '+(currentIndex+1);
+
+  prevBtn.disabled = currentIndex === 0;
+  nextBtn.disabled = currentIndex === galleryImages.length - 1;
+  photoCount.textContent = `${currentIndex + 1} / ${galleryImages.length}`;
+}
+
+function showPrevious(){
+  if(currentIndex > 0){
+    currentIndex--;
+    updateModal();
+  }
+}
+
+function showNext(){
+  if(currentIndex < galleryImages.length - 1){
+    currentIndex++;
+    updateModal();
+  }
+}
+
 function closeModal(){
   modal.classList.remove('show');
   modalImg.src='';
+  document.body.style.overflow='';
 }
+
+document.addEventListener('keydown',(event)=>{
+  if(!modal.classList.contains('show')) return;
+
+  if(event.key === 'Escape') closeModal();
+  if(event.key === 'ArrowRight') showPrevious();
+  if(event.key === 'ArrowLeft') showNext();
+});
 
 loadGallery();
 </script>
