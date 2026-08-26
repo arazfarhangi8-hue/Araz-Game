@@ -21,8 +21,8 @@ h1{text-align:center;color:#FFD700;margin-top:0}
 .gallery-nav{position:absolute;top:50%;transform:translateY(-50%);width:56px;height:56px;border:0;border-radius:50%;background:rgba(255,255,255,.18);color:white;font-size:34px;font-weight:bold;cursor:pointer;z-index:1002;display:flex;align-items:center;justify-content:center;transition:background .2s,transform .2s,opacity .2s}
 .gallery-nav:hover:not(:disabled){background:rgba(255,215,0,.9);color:#1e3c72;transform:translateY(-50%) scale(1.08)}
 .gallery-nav:disabled{opacity:.25;cursor:not-allowed}
-.gallery-nav[data-tooltip]::after{content:attr(data-tooltip);position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%) translateY(-4px);background:rgba(0,0,0,.72);color:white;padding:7px 11px;border-radius:8px;font-family:tahoma,sans-serif;font-size:13px;font-weight:normal;white-space:nowrap;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .18s,transform .18s,visibility .18s;box-shadow:0 4px 14px rgba(0,0,0,.25)}
-.gallery-nav:hover:not(:disabled)[data-tooltip]::after{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+.gallery-nav .tooltip{position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%) translateY(-4px);background:rgba(0,0,0,.72);color:white;padding:7px 11px;border-radius:8px;font-family:tahoma,sans-serif;font-size:13px;font-weight:normal;white-space:nowrap;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .35s ease,transform .35s ease,visibility .35s ease;box-shadow:0 4px 14px rgba(0,0,0,.25)}
+.gallery-nav.tooltip-visible .tooltip{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
 .prev{right:22px}
 .next{left:22px}
 .photo-count{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);padding:7px 13px;border-radius:12px;background:rgba(0,0,0,.45);font-size:15px;z-index:1002}
@@ -34,7 +34,7 @@ h1{text-align:center;color:#FFD700;margin-top:0}
   .prev{right:8px}
   .next{left:8px}
   .close{top:10px;left:14px;font-size:34px}
-  .gallery-nav[data-tooltip]::after{font-size:12px;padding:6px 9px}
+  .gallery-nav .tooltip{font-size:12px;padding:6px 9px}
 }
 @keyframes zoom{from{transform:scale(.75);opacity:0}to{transform:scale(1);opacity:1}}
 </style>
@@ -48,9 +48,9 @@ h1{text-align:center;color:#FFD700;margin-top:0}
 
 <div class="modal" id="modal" onclick="closeModal()">
   <span class="close" aria-label="بستن">&times;</span>
-  <button class="gallery-nav prev" id="prevBtn" data-tooltip="عکس قبلی" type="button" aria-label="عکس قبلی" onclick="event.stopPropagation();showPrevious()">‹</button>
+  <button class="gallery-nav prev" id="prevBtn" type="button" aria-label="عکس قبلی" onclick="event.stopPropagation();showPrevious()"><span>‹</span><span class="tooltip">عکس قبلی</span></button>
   <img id="modalImg" src="" alt="عکس بزرگ شده" onclick="event.stopPropagation()">
-  <button class="gallery-nav next" id="nextBtn" data-tooltip="عکس بعدی" type="button" aria-label="عکس بعدی" onclick="event.stopPropagation();showNext()">›</button>
+  <button class="gallery-nav next" id="nextBtn" type="button" aria-label="عکس بعدی" onclick="event.stopPropagation();showNext()"><span>›</span><span class="tooltip">عکس بعدی</span></button>
   <div class="photo-count" id="photoCount" aria-live="polite"></div>
 </div>
 
@@ -64,6 +64,41 @@ const photoCount = document.getElementById('photoCount');
 
 let galleryImages = [];
 let currentIndex = 0;
+let tooltipTimer = null;
+let tooltipButton = null;
+
+function startTooltip(button){
+  clearTimeout(tooltipTimer);
+  hideTooltip();
+  tooltipButton = button;
+  tooltipTimer = setTimeout(()=>{
+    if(tooltipButton === button && document.body.contains(button) && !button.disabled){
+      button.classList.add('tooltip-visible');
+    }
+  },500);
+}
+
+function stopTooltip(button){
+  if(tooltipButton === button){
+    clearTimeout(tooltipTimer);
+    hideTooltip();
+    tooltipButton = null;
+  }
+}
+
+function hideTooltip(){
+  prevBtn.classList.remove('tooltip-visible');
+  nextBtn.classList.remove('tooltip-visible');
+}
+
+[prevBtn,nextBtn].forEach(button=>{
+  button.addEventListener('mouseenter',()=>startTooltip(button));
+  button.addEventListener('mouseleave',()=>stopTooltip(button));
+  button.addEventListener('mousedown',()=>stopTooltip(button));
+  button.addEventListener('touchstart',()=>startTooltip(button),{passive:true});
+  button.addEventListener('touchend',()=>stopTooltip(button),{passive:true});
+  button.addEventListener('touchcancel',()=>stopTooltip(button),{passive:true});
+});
 
 async function loadGallery(){
   const galleryIndexUrl = './gallery.json';
@@ -116,6 +151,10 @@ function updateModal(){
   const currentImage = galleryImages[currentIndex];
   if(!currentImage) return;
 
+  hideTooltip();
+  clearTimeout(tooltipTimer);
+  tooltipButton = null;
+
   modalImg.src=currentImage.url;
   modalImg.alt='عکس آراز '+(currentIndex+1);
 
@@ -139,6 +178,9 @@ function showNext(){
 }
 
 function closeModal(){
+  hideTooltip();
+  clearTimeout(tooltipTimer);
+  tooltipButton = null;
   modal.classList.remove('show');
   modalImg.src='';
   document.body.style.overflow='';
