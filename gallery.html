@@ -66,10 +66,13 @@ let galleryImages = [];
 let currentIndex = 0;
 
 async function loadGallery(){
-  const galleryIndexUrl = 'https://raw.githubusercontent.com/arazfarhangi8-hue/Araz-Game/main/gallery.json';
+  const galleryIndexUrl = './gallery.json';
   try{
-    const response = await fetch(galleryIndexUrl + '?t=' + Date.now(), {cache:'no-store'});
-    if(!response.ok) throw new Error('Gallery index error');
+    const response = await fetch(galleryIndexUrl + '?t=' + Date.now(), {
+      cache:'no-store',
+      headers:{'Accept':'application/json'}
+    });
+    if(!response.ok) throw new Error('Gallery index error: ' + response.status);
 
     const files = await response.json();
     galleryImages = Array.isArray(files) ? files.filter(file => file && file.url) : [];
@@ -89,7 +92,7 @@ async function loadGallery(){
       img.src=file.url;
       img.alt='عکس آراز '+(index+1);
       img.loading='lazy';
-      img.onerror=()=>{ img.style.display='none'; };
+      img.onerror=()=>{ img.style.opacity='.35'; };
       img.onclick=()=>openModal(index);
 
       card.appendChild(img);
