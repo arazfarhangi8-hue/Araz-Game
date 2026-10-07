@@ -18,17 +18,8 @@ button{background:#0066ff;color:#fff;border:none;padding:12px 24px;border-radius
 <p>🎼 آشنایی با ویولن</p><p>🎵 آموزش نت‌ها</p><p>🎻 طرز صحیح گرفتن ویولن و آرشه</p><p>🎶 تمرین‌های ساده</p>
 </div>
 <hr>
-<h2>🎬 فیلم‌ها و عکس‌های آموزش ویولن</h2>
-<div id="status">در حال بارگذاری...</div><div id="media"></div>
-<button id="prev" onclick="move(-1)">صفحه قبلی</button><button id="next" onclick="move(1)">صفحه بعدی</button>
+<h2>🎬 بخش فیلم‌ها و عکس‌های آموزش ویولن</h2>
+<p id="status">فعلاً فیلم یا عکس آموزشی در این بخش قرار نگرفته است.</p>
 <br><button class="back" onclick="location.href='index.html'">🏠 بازگشت به صفحه اصلی</button>
 </div>
-<script>
-const api='https://api.github.com/repos/arazfarhangi8-hue/Araz-Game/contents/videos/violin';
-let files=[],index=0;const videoExt=['mp4','webm','ogg','mov','m4v'],imageExt=['jpg','jpeg','png','gif','webp'];
-function title(n){return n.replace(/\.[^/.]+$/,'').replace(/[-_]+/g,' ').trim()||'درس ویولن'}
-async function load(){try{const r=await fetch(api,{cache:'no-store'});if(!r.ok)throw 0;const d=await r.json();files=d.filter(x=>x.type==='file'&&(videoExt.includes(x.name.split('.').pop().toLowerCase())||imageExt.includes(x.name.split('.').pop().toLowerCase()))).sort((a,b)=>a.name.localeCompare(b.name,undefined,{numeric:true}));if(!files.length){empty();return}show(0)}catch(e){empty()}}
-function empty(){status.textContent='هنوز هیچ فیلمی منتشر نشده است.';media.innerHTML='';prev.disabled=true;next.disabled=true}
-function show(i){index=i;status.textContent='در حال بارگذاری...';media.innerHTML='';setTimeout(()=>{const f=files[index],ext=f.name.split('.').pop().toLowerCase();status.textContent=title(f.name);media.innerHTML=videoExt.includes(ext)?'<video class="media" controls playsinline src="'+f.download_url+'"></video>':'<img class="media" src="'+f.download_url+'" alt="'+title(f.name)+'">';prev.disabled=index===0;next.disabled=index===files.length-1},500)}
-function move(s){if(files.length)show(index+s)}load();
-</script></body></html>
+</body></html>
