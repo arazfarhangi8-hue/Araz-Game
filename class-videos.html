@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>فیلم‌های کلاس | Araz Game</title>
+<style>
+body{margin:0;font-family:Tahoma,sans-serif;background:#f5f9ff;text-align:center}
+header{background:linear-gradient(90deg,#0066ff,#fff,#ff3333);padding:25px}
+.card{background:#fff;width:92%;max-width:800px;margin:25px auto;padding:22px;border-radius:18px;box-shadow:0 0 12px #ccc}
+#status{color:#000;font-size:18px;margin:18px}.media{max-width:100%;max-height:65vh;border-radius:12px}video{width:100%;max-width:760px;background:#000}
+.nav button{background:#0066ff;color:#fff;border:0;padding:13px 22px;border-radius:10px;font-size:18px;margin:8px;cursor:pointer}.nav button:disabled{opacity:.45;cursor:not-allowed}.back{background:#444!important}
+</style></head>
+<body>
+<header><h1 id="title">🎬 فیلم‌های آموزشی</h1><p>محتوای آموزشی این کلاس</p></header>
+<div class="card"><div id="status">در حال بارگذاری...</div><div id="media"></div>
+<div class="nav"><button id="prev" onclick="move(-1)">صفحه قبلی</button><button id="next" onclick="move(1)">صفحه بعدی</button></div>
+<br><button class="back" onclick="location.href='educational-videos.html'">↩ انتخاب کلاس</button></div>
+<script>
+const cls=(new URLSearchParams(location.search).get('class')||'01').padStart(2,'0'),api='https://api.github.com/repos/arazfarhangi8-hue/Araz-Game/contents/videos/educational/class-'+cls;
+let files=[],index=0;const videoExt=['mp4','webm','ogg','mov','m4v'],imageExt=['jpg','jpeg','png','gif','webp'];
+function nameOf(n){return n.replace(/\.[^/.]+$/,'').replace(/[-_]+/g,' ').trim()||'فیلم آموزشی'}
+async function load(){document.getElementById('title').textContent='🎬 فیلم‌های آموزشی کلاس '+parseInt(cls,10);try{const r=await fetch(api,{cache:'no-store'});if(!r.ok)throw 0;const d=await r.json();files=d.filter(x=>x.type==='file'&&(videoExt.includes(x.name.split('.').pop().toLowerCase())||imageExt.includes(x.name.split('.').pop().toLowerCase()))).sort((a,b)=>a.name.localeCompare(b.name,undefined,{numeric:true}));if(!files.length){empty();return}show(0)}catch(e){empty()}}
+function empty(){document.getElementById('status').textContent='هنوز هیچ فیلمی منتشر نشده است.';document.getElementById('media').innerHTML='';prev.disabled=true;next.disabled=true}
+function show(i){index=i;status.textContent='در حال آماده‌سازی صفحه '+(i+1)+' از '+files.length+'...';media.innerHTML='';setTimeout(()=>{const f=files[index],ext=f.name.split('.').pop().toLowerCase();status.textContent=nameOf(f.name);media.innerHTML=videoExt.includes(ext)?'<video class="media" controls playsinline src="'+f.download_url+'"></video>':'<img class="media" src="'+f.download_url+'" alt="'+nameOf(f.name)+'">';prev.disabled=index===0;next.disabled=index===files.length-1},500)}
+function move(s){if(files.length)show(index+s)}load();
+</script></body></html>
