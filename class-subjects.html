@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>درس‌های کلاس | Araz Game</title>
+<style>
+body{margin:0;font-family:Tahoma,sans-serif;background:#f5f9ff;text-align:center}
+header{background:linear-gradient(90deg,#0066ff,#fff,#ff3333);padding:25px}
+.box{background:#fff;width:90%;max-width:650px;margin:30px auto;padding:25px;border-radius:18px;box-shadow:0 0 12px #ccc}
+#loading{font-size:18px;margin:15px;color:#555}
+.subjectBtn{width:250px;background:#0066ff;color:#fff;border:0;padding:15px;margin:9px;border-radius:12px;font-size:21px;cursor:pointer;transition:.3s}
+.subjectBtn:hover{background:#0044aa;transform:scale(1.05)}
+.subjectBtn.unpublished{background:#d0d0d0;color:#777;cursor:not-allowed;box-shadow:none}
+.subjectBtn.unpublished:hover{background:#d0d0d0;transform:none}
+.status{display:block;font-size:19px;font-weight:bold;margin-top:7px}
+.back{width:250px;background:#444;color:#fff;border:0;padding:15px;margin:15px 9px;border-radius:12px;font-size:20px;cursor:pointer}
+</style></head>
+<body>
+<header><h1 id="title">📚 درس‌های کلاس</h1><p>وضعیت انتشار هر درس</p></header>
+<div class="box"><div id="loading">در حال بارگذاری...</div><div id="subjects"></div>
+<button class="back" onclick="location.href='start.html'">↩ بازگشت به صفحه اصلی</button></div>
+<script>
+const cls=(new URLSearchParams(location.search).get('class')||'01').padStart(2,'0');
+const lists={
+'01':['فارسی','ریاضی','علوم','قرآن','هدیه‌های آسمان'],
+'02':['فارسی','ریاضی','علوم','قرآن','هدیه‌های آسمان'],
+'03':['فارسی','ریاضی','علوم','مطالعات اجتماعی','قرآن','هدیه‌های آسمان'],
+'04':['فارسی','ریاضی','علوم','مطالعات اجتماعی','قرآن','هدیه‌های آسمان'],
+'05':['فارسی','ریاضی','علوم','مطالعات اجتماعی','قرآن','هدیه‌های آسمان'],
+'06':['فارسی','ریاضی','علوم','مطالعات اجتماعی','قرآن','هدیه‌های آسمان'],
+'07':['فارسی','ریاضی','علوم','مطالعات اجتماعی','قرآن','عربی','انگلیسی','پیام‌های آسمان','تفکر و سبک زندگی'],
+'08':['فارسی','ریاضی','علوم','مطالعات اجتماعی','قرآن','عربی','انگلیسی','پیام‌های آسمان','تفکر و سبک زندگی'],
+'09':['فارسی','ریاضی','علوم','مطالعات اجتماعی','قرآن','عربی','انگلیسی','پیام‌های آسمان','تفکر و سبک زندگی'],
+'10':['فارسی','ریاضی','فیزیک','شیمی','زیست‌شناسی','هندسه','آمار و احتمال','عربی','انگلیسی','دینی'],
+'11':['فارسی','ریاضی','فیزیک','شیمی','زیست‌شناسی','هندسه','آمار و احتمال','عربی','انگلیسی','دینی'],
+'12':['فارسی','ریاضی','فیزیک','شیمی','زیست‌شناسی','هندسه','حسابان','آمار و احتمال','عربی','انگلیسی','دینی']
+};
+const slugMap={'فارسی':'farsi','ریاضی':'riazi','علوم':'oloom','مطالعات اجتماعی':'motaleat','قرآن':'quran','هدیه‌های آسمان':'hedye','عربی':'arabi','انگلیسی':'english','پیام‌های آسمان':'payam','تفکر و سبک زندگی':'tafakor','فیزیک':'fizik','شیمی':'shimi','زیست‌شناسی':'zist','هندسه':'hendese','آمار و احتمال':'amar','حسابان':'hesaban','دینی':'dini'};
+const exts=['mp4','webm','ogg','mov','m4v','jpg','jpeg','png','gif','webp'];
+function slug(s){return slugMap[s]||s.replace(/\s+/g,'-')}
+async function published(subject){
+ try{
+  const r=await fetch('https://api.github.com/repos/arazfarhangi8-hue/Araz-Game/contents/videos/educational/class-'+cls+'/'+slug(subject),{cache:'no-store'});
+  if(!r.ok)return false;
+  const d=await r.json(); return Array.isArray(d)&&d.some(x=>x.type==='file'&&exts.includes(x.name.split('.').pop().toLowerCase()));
+ }catch(e){return false}
+}
+async function load(){
+ document.getElementById('title').textContent='📚 درس‌های کلاس '+parseInt(cls,10);
+ const arr=lists[cls]||lists['01'];
+ const results=await Promise.all(arr.map(published));
+ document.getElementById('loading').style.display='none';
+ arr.forEach((s,i)=>{
+  const b=document.createElement('button'); b.className='subjectBtn '+(results[i]?'':'unpublished');
+  b.innerHTML='📖 '+s+'<span class="status">'+(results[i]?'منتشر شده':'منتشر نشده')+'</span>';
+  if(results[i])b.onclick=()=>location.href='subject-videos.html?class='+cls+'&subject='+encodeURIComponent(slug(s));
+  else{b.disabled=true;b.title='هنوز فیلمی برای این درس منتشر نشده است';}
+  document.getElementById('subjects').appendChild(b);document.getElementById('subjects').appendChild(document.createElement('br'));
+ });
+}
+load();
+</script></body></html>
