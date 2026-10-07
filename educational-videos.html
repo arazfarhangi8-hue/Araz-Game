@@ -42,7 +42,7 @@ async function load(){
     const b=document.createElement('button');
     b.className='classBtn '+(published?'':'unpublished');
     b.innerHTML='📚 کلاس '+(i+1)+'<span class="status">'+(published?'منتشر شده':'منتشر نشده')+'</span>';
-    if(published)b.onclick=()=>location.href='class-videos.html?class='+n;
+    if(published)b.onclick=()=>location.href='class-subjects.html?class='+n;
     else{b.disabled=true;b.title='هنوز فیلمی منتشر نشده است';}
     container.appendChild(b);
     const br=document.createElement('br');container.appendChild(br);
