@@ -7,47 +7,14 @@
 body{margin:0;font-family:Tahoma,sans-serif;background:#f5f9ff;text-align:center}
 header{background:linear-gradient(90deg,#0066ff,#fff,#ff3333);padding:25px}
 .box{background:#fff;width:90%;max-width:650px;margin:30px auto;padding:25px;border-radius:18px;box-shadow:0 0 12px #ccc}
-#loading{font-size:16px;margin:15px;color:#555}
 .classBtn{width:220px;background:#0066ff;color:#fff;border:0;padding:15px;margin:10px;border-radius:12px;font-size:22px;cursor:pointer;transition:.3s}
 .classBtn:hover{background:#0044aa;transform:scale(1.05)}
-.classBtn.unpublished{background:#d0d0d0;color:#777;cursor:not-allowed;box-shadow:none}
-.classBtn.unpublished:hover{background:#d0d0d0;transform:none}
-.status{display:block;font-size:13px;margin-top:5px}
 .back{width:220px;background:#444;color:#fff;border:0;padding:15px;margin:15px 10px;border-radius:12px;font-size:20px;cursor:pointer}
 </style></head>
 <body>
-<header><h1>🎬 فیلم‌های آموزشی</h1><p>وضعیت انتشار فیلم‌های هر کلاس</p></header>
+<header><h1>🎬 فیلم‌های آموزشی</h1><p>کلاس مورد نظر را انتخاب کنید</p></header>
 <div class="box">
-<div id="loading">در حال بارگذاری...</div>
-<div id="classes"></div>
+<button class="classBtn" onclick="location.href='class-subjects.html?class=01'">📚 کلاس 1</button><br><button class="classBtn" onclick="location.href='class-subjects.html?class=02'">📚 کلاس 2</button><br><button class="classBtn" onclick="location.href='class-subjects.html?class=03'">📚 کلاس 3</button><br><button class="classBtn" onclick="location.href='class-subjects.html?class=04'">📚 کلاس 4</button><br><button class="classBtn" onclick="location.href='class-subjects.html?class=05'">📚 کلاس 5</button><br><button class="classBtn" onclick="location.href='class-subjects.html?class=06'">📚 کلاس 6</button><br><button class="classBtn" onclick="location.href='class-subjects.html?class=07'">📚 کلاس 7</button><br><button class="classBtn" onclick="location.href='class-subjects.html?class=08'">📚 کلاس 8</button><br><button class="classBtn" onclick="location.href='class-subjects.html?class=09'">📚 کلاس 9</button><br><button class="classBtn" onclick="location.href='class-subjects.html?class=10'">📚 کلاس 10</button><br><button class="classBtn" onclick="location.href='class-subjects.html?class=11'">📚 کلاس 11</button><br><button class="classBtn" onclick="location.href='class-subjects.html?class=12'">📚 کلاس 12</button><br>
 <button class="back" onclick="location.href='start.html'">↩ بازگشت به صفحه اصلی</button>
 </div>
-<script>
-const exts=['mp4','webm','ogg','mov','m4v','jpg','jpeg','png','gif','webp'];
-const container=document.getElementById('classes');
-async function checkClass(n){
-  try{
-    const r=await fetch('https://api.github.com/repos/arazfarhangi8-hue/Araz-Game/contents/videos/educational/class-'+n,{cache:'no-store'});
-    if(!r.ok)return false;
-    const d=await r.json();
-    return Array.isArray(d)&&d.some(x=>x.type==='file'&&exts.includes(x.name.split('.').pop().toLowerCase()));
-  }catch(e){return false}
-}
-async function load(){
-  const loading=document.getElementById('loading');
-  const results=await Promise.all(Array.from({length:12},(_,i)=>checkClass(String(i+1).padStart(2,'0'))));
-  loading.style.display='none';
-  results.forEach((published,i)=>{
-    const n=String(i+1).padStart(2,'0');
-    const b=document.createElement('button');
-    b.className='classBtn '+(published?'':'unpublished');
-    b.innerHTML='📚 کلاس '+(i+1)+'<span class="status">'+(published?'منتشر شده':'منتشر نشده')+'</span>';
-    if(published)b.onclick=()=>location.href='class-subjects.html?class='+n;
-    else{b.disabled=true;b.title='هنوز فیلمی منتشر نشده است';}
-    container.appendChild(b);
-    const br=document.createElement('br');container.appendChild(br);
-  });
-}
-load();
-</script>
 </body></html>
