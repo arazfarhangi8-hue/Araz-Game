@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="فیلم‌های آموزشی ویولن در آپارات: آشنایی با ساز، نت‌خوانی، گرفتن ویولن و آرشه، تمرین‌های ساده و آهنگ‌ها.">
+<meta name="description" content="فیلم‌های آموزش ویولن در سایت آراز گیم؛ فهرست فیلم‌ها به‌صورت خودکار از پوشه فیلم‌های ویولن خوانده می‌شود.">
 <title>فیلم‌های آموزشی ویولن | Araz Game</title>
 <style>
 *{box-sizing:border-box}
@@ -13,30 +13,36 @@ header h1{margin:4px 0 8px}
 main{width:calc(100% - 24px);max-width:1000px;margin:24px auto}
 .intro,.video-card,.topic-menu{background:#fff;border-radius:15px;box-shadow:0 0 10px #ddd;padding:18px;margin:16px auto}
 .topic-menu{display:flex;flex-wrap:wrap;justify-content:center;gap:9px}
-.topic-menu a,.back,.open-video,.search-link{display:inline-block;text-decoration:none;background:#0066ff;color:#fff;border-radius:9px;padding:10px 15px;font-size:15px;font-family:Tahoma,sans-serif}
-.topic-menu a:hover,.back:hover,.open-video:hover,.search-link:hover{background:#0044aa}
+.topic-menu a,.back,.source-button{display:inline-block;text-decoration:none;background:#0066ff;color:#fff;border:0;border-radius:9px;padding:11px 15px;font-size:15px;font-family:Tahoma,sans-serif;cursor:pointer}
+.topic-menu a:hover,.back:hover,.source-button:hover{background:#0044aa}
 .topic-menu a.active{background:#003b99;outline:3px solid #b9d4ff}
 .videos{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:16px}
 .video-card{text-align:right;margin:0}
-.video-card h3{font-size:18px;margin:0 0 12px}
-iframe{display:block;width:100%;aspect-ratio:16/9;border:0;border-radius:10px;background:#111}
-.video-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
-.open-video{font-size:14px}
-.message{background:#fff4d6;border-radius:10px;padding:14px;margin:15px auto}
+.video-card h3{font-size:18px;margin:0 0 12px;overflow-wrap:anywhere}
+.small{font-size:13px;color:#555}
+.screen{width:100%;aspect-ratio:16/9;background:#050505;border-radius:10px;overflow:hidden;display:flex;align-items:center;justify-content:center;color:white;text-align:center;padding:12px}
+.screen-placeholder{font-size:25px;font-weight:bold}
+.screen-message{font-size:15px;line-height:2;color:#fff}
+.screen video,.screen iframe{display:block;width:100%;height:100%;border:0;background:#000;object-fit:contain}
+.actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:12px}
+.actions .source-button{flex:1;min-width:130px;text-align:center}
+.source-button.site{background:#0066ff}
+.source-button.aparat{background:#df3a31}
+.source-button:disabled{opacity:.55;cursor:not-allowed}
+.status{background:#fff4d6;border-radius:10px;padding:14px;margin:15px auto}
 .back-row{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin:24px 0}
 .back{font-size:16px}
-.small{font-size:13px;color:#555}
 </style>
 </head>
 <body>
 <header>
 <h1>🎻 فیلم‌های آموزشی ویولن</h1>
-<p>فیلم‌های پیشنهادی برای یادگیری قدم‌به‌قدم ویولن در آپارات</p>
+<p>ویدیوهایی که در پوشهٔ سایت منتشر می‌کنی، خودکار در این صفحه فهرست می‌شوند.</p>
 </header>
 <main>
 <section class="intro">
 <h2 id="page-title">فیلم‌های آموزشی ویولن</h2>
-<p>فیلم‌ها از آپارات هستند و داخل همین صفحه نمایش داده می‌شوند. اگر یک فیلم پخش نشد، دکمهٔ آبی «تماشا در آپارات» را بزن.</p>
+<p>ابتدا فقط کادر سیاه «تماشا» دیده می‌شود. دکمهٔ «خود سایت» فیلم داخل همین صفحه را پخش می‌کند؛ دکمهٔ «آپارات» هم فیلمِ دارای لینک آپارات را همین‌جا نشان می‌دهد.</p>
 </section>
 
 <nav class="topic-menu" aria-label="موضوع‌های آموزش ویولن">
@@ -48,9 +54,9 @@ iframe{display:block;width:100%;aspect-ratio:16/9;border:0;border-radius:10px;ba
 <a href="violin-videos.html" data-topic="all">همهٔ فیلم‌ها</a>
 </nav>
 
+<div id="status" class="status">در حال بارگذاری فهرست فیلم‌ها…</div>
 <div id="videos" class="videos"></div>
-<div id="extra-link"></div>
-<p class="small">ویدیوها در آپارات میزبانی می‌شوند؛ نام کانال و سازندهٔ هر فیلم در صفحهٔ آپارات آن مشخص است.</p>
+
 <div class="back-row">
 <a class="back" href="violin.html">🎻 بازگشت به آموزش ویولن</a>
 <a class="back" href="index.html">🏠 بازگشت به صفحه اصلی</a>
@@ -58,103 +64,216 @@ iframe{display:block;width:100%;aspect-ratio:16/9;border:0;border-radius:10px;ba
 </main>
 
 <script>
-const lessons = {
-  intro: {
-    title: "🎼 آشنایی با ویولن",
-    search: "آموزش مقدماتی ویولن آشنایی با ساز",
-    videos: [
-      {id:"penl5z6", title:"آموزش مقدماتی ویولن ـ قسمت اول", by:"آموزشگاه موسیقی شهرآوا"},
-      {id:"z605x4f", title:"آموزش ویولن ـ جلسه اول", by:"آموزشگاه موسیقی شهرآوا"}
-    ]
-  },
-  notes: {
-    title: "🎵 آموزش نت‌ها و نت‌خوانی",
-    search: "آموزش نت خوانی ویولن",
-    videos: [
-      {id:"cbqy622", title:"آموزش نت‌خوانی از صفر ـ قسمت اول", by:"آپارات"},
-      {id:"rO2Vg", title:"آموزش نت‌خوانی و بخش‌های مختلف خط موسیقی", by:"آپارات"}
-    ]
-  },
-  holding: {
-    title: "🎻 طرز صحیح گرفتن ویولن و آرشه",
-    search: "نحوه صحیح گرفتن ویولن و آرشه",
-    videos: [
-      {id:"ybp55tl", title:"نحوه گرفتن آرشه ویولن", by:"آپارات"},
-      {id:"o7930e9", title:"آموزش جلسه اول و دوم کلاس‌های ویولن؛ گرفتن ساز و آرشه", by:"آپارات"}
-    ]
-  },
-  practice: {
-    title: "🎶 تمرین‌های ساده ویولن",
-    search: "تمرین ساده ویولن برای مبتدیان",
-    videos: [
-      {id:"k944a1h", title:"آموزش ساز ویولن ـ جلسه اول", by:"آپارات"},
-      {id:"j1405q6", title:"آموزش ساز ویولن ـ جلسه سوم", by:"آپارات"}
-    ]
-  },
-  songs: {
-    title: "🎵 آهنگ‌ها و اجرای ویولن",
-    search: "آموزش آهنگ ساده با ویولن",
-    videos: [
-      {id:"wom1g7q", title:"ویولن‌نوازی کلاسیک", by:"آپارات"}
-    ]
-  }
+const OWNER = "arazfarhangi8-hue";
+const REPO = "Araz-Game";
+const FOLDER = "violin-videos";
+const BRANCH = "main";
+const topics = {
+  intro:  {title:"🎼 آشنایی با ویولن", match:/(آشنایی|معرفی|اجزای|شناخت|intro)/i},
+  notes:  {title:"🎵 آموزش نت‌ها و نت‌خوانی", match:/(نت|نت‌خوانی|نت خوانی|نت‌نویسی|notes)/i},
+  holding:{title:"🎻 طرز صحیح گرفتن ویولن و آرشه", match:/(آرشه|گرفتن|نگه.?داشتن|holding)/i},
+  practice:{title:"🎶 تمرین‌های ساده ویولن", match:/(تمرین|مشق|practice)/i},
+  songs:  {title:"🎵 آهنگ‌ها", match:/(آهنگ|قطعه|نوازی|ترانه|songs?)/i}
 };
 
 const params = new URLSearchParams(window.location.search);
 const topic = params.get("topic") || "all";
-const chosen = lessons[topic];
-document.getElementById("page-title").textContent = chosen ? chosen.title : "🎻 همهٔ فیلم‌های آموزشی ویولن";
-document.title = (chosen ? chosen.title.replace(/[🎼🎵🎻🎶]/g,"").trim() : "همهٔ فیلم‌ها") + " | Araz Game";
+const currentTopic = topics[topic];
+document.getElementById("page-title").textContent = currentTopic ? currentTopic.title : "🎻 همهٔ فیلم‌های آموزشی ویولن";
+document.title = (currentTopic ? currentTopic.title.replace(/[🎼🎵🎻🎶]/g,"").trim() : "همهٔ فیلم‌های آموزشی ویولن") + " | Araz Game";
 
 document.querySelectorAll("[data-topic]").forEach(link => {
-  if ((link.dataset.topic === topic) || (topic === "all" && link.dataset.topic === "all")) {
+  if (link.dataset.topic === topic || (topic === "all" && link.dataset.topic === "all")) {
     link.classList.add("active");
     link.setAttribute("aria-current","page");
   }
 });
 
-const groups = chosen ? [chosen] : Object.values(lessons);
+const statusBox = document.getElementById("status");
 const container = document.getElementById("videos");
-groups.forEach(group => {
-  group.videos.forEach(video => {
-    const card = document.createElement("article");
-    card.className = "video-card";
-    const heading = document.createElement("h3");
-    heading.textContent = video.title;
-    const by = document.createElement("p");
-    by.className = "small";
-    by.textContent = "منبع: " + video.by + " | آپارات";
-    const frame = document.createElement("iframe");
-    frame.src = "https://www.aparat.com/video/video/embed/videohash/" + encodeURIComponent(video.id) + "/vt/frame";
-    frame.title = video.title;
-    frame.loading = "lazy";
-    frame.referrerPolicy = "strict-origin-when-cross-origin";
-    frame.allow = "autoplay; encrypted-media; picture-in-picture; web-share";
-    frame.setAttribute("allowfullscreen","");
-    frame.setAttribute("webkitallowfullscreen","");
-    frame.setAttribute("mozallowfullscreen","");
-    const actions = document.createElement("div");
-    actions.className = "video-actions";
-    const open = document.createElement("a");
-    open.className = "open-video";
-    open.href = "https://www.aparat.com/v/" + encodeURIComponent(video.id);
-    open.target = "_blank";
-    open.rel = "noopener noreferrer";
-    open.textContent = "▶ تماشا در آپارات";
-    actions.appendChild(open);
-    card.appendChild(heading);
-    card.appendChild(by);
-    card.appendChild(frame);
-    card.appendChild(actions);
-    container.appendChild(card);
-  });
-});
 
-const searchText = chosen ? chosen.search : "آموزش ویولن";
-const extra = document.getElementById("extra-link");
-extra.className = "message";
-const searchUrl = "https://www.aparat.com/search?query=" + encodeURIComponent(searchText);
-extra.innerHTML = '<b>فیلم‌های بیشتر دربارهٔ این موضوع</b><br><a class="search-link" href="' + searchUrl + '" target="_blank" rel="noopener noreferrer">🔎 جست‌وجوی فیلم‌های بیشتر در آپارات</a>';
+function showStatus(message) {
+  statusBox.textContent = message;
+  statusBox.style.display = "block";
+}
+
+function makeTitle(filename) {
+  return filename
+    .replace(/\.aparat\.txt$/i, "")
+    .replace(/\.(mp4|webm|ogg|m4v|mov)$/i, "")
+    .replace(/[_-]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function siteVideoUrl(filename) {
+  return "https://" + OWNER + ".github.io/" + REPO + "/" + FOLDER + "/" +
+    filename.split("/").map(part => encodeURIComponent(part)).join("/");
+}
+
+function extractAparatId(url) {
+  const match = url.match(/aparat\.com\/(?:video\/video\/embed\/videohash\/|v\/)([A-Za-z0-9_-]+)/i);
+  return match ? match[1] : null;
+}
+
+async function readAparatLink(file) {
+  try {
+    const response = await fetch(file.download_url, {cache:"no-store"});
+    if (!response.ok) return "";
+    const text = (await response.text()).trim();
+    const match = text.match(/https?:\/\/[^\s"'<>]+/i);
+    return match ? match[0].replace(/[),.]+$/,"") : "";
+  } catch (_) {
+    return "";
+  }
+}
+
+function makeScreen(card, message) {
+  const screen = card.querySelector(".screen");
+  screen.replaceChildren();
+  const label = document.createElement("div");
+  label.className = "screen-placeholder";
+  label.textContent = message;
+  screen.appendChild(label);
+  return screen;
+}
+
+function showLocalVideo(card, entry) {
+  const screen = makeScreen(card, "");
+  if (!entry.siteUrl) {
+    screen.firstChild.className = "screen-message";
+    screen.firstChild.textContent = "فایل این فیلم هنوز در پوشهٔ سایت قرار نگرفته است.";
+    return;
+  }
+  const video = document.createElement("video");
+  video.controls = true;
+  video.autoplay = true;
+  video.playsInline = true;
+  video.preload = "metadata";
+  video.src = entry.siteUrl;
+  video.setAttribute("aria-label", entry.title);
+  screen.appendChild(video);
+  video.play().catch(() => {});
+}
+
+function showAparatVideo(card, entry) {
+  const screen = makeScreen(card, "");
+  if (!entry.aparatUrl) {
+    screen.firstChild.className = "screen-message";
+    screen.firstChild.textContent = "لینک آپارات برای این فیلم ثبت نشده است. باید فیلم را در آپارات هم منتشر کنی و لینک آن را در فایل راهنمای همان ویدیو قرار بدهی.";
+    return;
+  }
+  const id = extractAparatId(entry.aparatUrl);
+  if (id) {
+    const iframe = document.createElement("iframe");
+    iframe.src = "https://www.aparat.com/video/video/embed/videohash/" + encodeURIComponent(id) + "/vt/frame";
+    iframe.title = entry.title + " - آپارات";
+    iframe.loading = "lazy";
+    iframe.allow = "autoplay; encrypted-media; picture-in-picture; web-share";
+    iframe.setAttribute("allowfullscreen","");
+    iframe.referrerPolicy = "strict-origin-when-cross-origin";
+    screen.appendChild(iframe);
+  } else {
+    screen.firstChild.className = "screen-message";
+    screen.firstChild.textContent = "برای این لینک، نمایش داخل صفحه ممکن نشد. از لینک آپارات زیر استفاده کن.";
+    const link = document.createElement("a");
+    link.href = entry.aparatUrl;
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    link.textContent = "باز کردن فیلم در آپارات";
+    link.style.cssText = "color:white;display:block;margin-top:8px";
+    screen.appendChild(link);
+  }
+}
+
+function renderEntry(entry) {
+  const card = document.createElement("article");
+  card.className = "video-card";
+  const title = document.createElement("h3");
+  title.textContent = "🎬 " + entry.title;
+  const screen = document.createElement("div");
+  screen.className = "screen";
+  const placeholder = document.createElement("div");
+  placeholder.className = "screen-placeholder";
+  placeholder.textContent = "▶ تماشا";
+  screen.appendChild(placeholder);
+
+  const actions = document.createElement("div");
+  actions.className = "actions";
+
+  const siteButton = document.createElement("button");
+  siteButton.type = "button";
+  siteButton.className = "source-button site";
+  siteButton.textContent = "▶ خود سایت";
+  siteButton.addEventListener("click", () => showLocalVideo(card, entry));
+
+  const aparatButton = document.createElement("button");
+  aparatButton.type = "button";
+  aparatButton.className = "source-button aparat";
+  aparatButton.textContent = "▶ آپارات";
+  aparatButton.addEventListener("click", () => showAparatVideo(card, entry));
+
+  actions.append(siteButton, aparatButton);
+  card.append(title, screen, actions);
+  container.appendChild(card);
+}
+
+async function loadVideos() {
+  try {
+    const apiUrl = "https://api.github.com/repos/" + OWNER + "/" + REPO + "/contents/" + FOLDER + "?ref=" + BRANCH;
+    const response = await fetch(apiUrl, {cache:"no-store"});
+    if (!response.ok) throw new Error("فهرست پوشه در دسترس نیست");
+    const files = await response.json();
+    if (!Array.isArray(files)) throw new Error("پاسخ فهرست معتبر نیست");
+
+    const media = files.filter(file => file.type === "file" && /\.(mp4|webm|ogg|m4v|mov)$/i.test(file.name));
+    const sidecars = files.filter(file => file.type === "file" && /\.aparat\.txt$/i.test(file.name));
+    const sidecarByBase = new Map(sidecars.map(file => [file.name.replace(/\.aparat\.txt$/i,"").toLowerCase(), file]));
+    const entries = [];
+
+    for (const file of media) {
+      const base = file.name.replace(/\.(mp4|webm|ogg|m4v|mov)$/i,"");
+      const sidecar = sidecarByBase.get(base.toLowerCase());
+      entries.push({
+        title: makeTitle(file.name),
+        filename: file.name,
+        siteUrl: siteVideoUrl(file.name),
+        aparatUrl: sidecar ? await readAparatLink(sidecar) : ""
+      });
+    }
+
+    const mediaBases = new Set(media.map(file => file.name.replace(/\.(mp4|webm|ogg|m4v|mov)$/i,"").toLowerCase()));
+    for (const sidecar of sidecars) {
+      const base = sidecar.name.replace(/\.aparat\.txt$/i,"");
+      if (!mediaBases.has(base.toLowerCase())) {
+        entries.push({
+          title: makeTitle(sidecar.name),
+          filename: sidecar.name,
+          siteUrl: "",
+          aparatUrl: await readAparatLink(sidecar)
+        });
+      }
+    }
+
+    entries.sort((a,b) => a.title.localeCompare(b.title,"fa"));
+    const shown = currentTopic ? entries.filter(entry => currentTopic.match.test(entry.title)) : entries;
+    container.replaceChildren();
+
+    if (shown.length === 0) {
+      showStatus(currentTopic
+        ? "برای این بخش هنوز فیلمی منتشر نشده است. فایل ویدیو را در پوشهٔ violin-videos قرار بده و نامش را مرتبط با «" + currentTopic.title.replace(/[🎼🎵🎻🎶]/g,"").trim() + "» انتخاب کن."
+        : "هنوز فیلمی منتشر نشده است. فایل‌های ویدیو را در پوشهٔ violin-videos گیت‌هاب قرار بده.");
+      return;
+    }
+
+    statusBox.style.display = "none";
+    shown.forEach(renderEntry);
+  } catch (error) {
+    showStatus("فهرست خودکار فیلم‌ها بارگذاری نشد. چند لحظه بعد صفحه را دوباره باز کن. اگر مشکل ادامه داشت، پوشهٔ violin-videos را در گیت‌هاب بررسی کن.");
+  }
+}
+
+loadVideos();
 </script>
 </body>
 </html>
