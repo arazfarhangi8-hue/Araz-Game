@@ -1,23 +1,40 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>آموزش ویولن | Araz Game</title>
 <style>
-body{font-family:Tahoma,sans-serif;background:#f5f9ff;text-align:center;margin:0}
-header{background:linear-gradient(90deg,#0066ff,#fff,#ff3333);padding:25px}
-.card{background:#fff;max-width:760px;margin:30px auto;padding:20px;border-radius:15px;box-shadow:0 0 10px #ccc}
-.lesson-list p{font-size:18px}#status{margin:20px;color:#000;font-size:18px}.media{max-width:100%;max-height:65vh;border-radius:12px}video{width:100%;background:#000}
-button{background:#0066ff;color:#fff;border:none;padding:12px 24px;border-radius:10px;font-size:18px;cursor:pointer;margin:7px}button:disabled{opacity:.45}.back{background:#0066ff}
-</style></head>
+*{box-sizing:border-box}
+body{font-family:Tahoma,sans-serif;background:#f5f9ff;text-align:center;margin:0;color:#172033}
+header{background:linear-gradient(90deg,#0066ff,#fff,#ff3333);padding:25px 15px}
+.card{background:#fff;width:calc(100% - 28px);max-width:760px;margin:30px auto;padding:24px 18px;border-radius:15px;box-shadow:0 0 10px #ccc}
+.lesson-list{display:grid;grid-template-columns:1fr;gap:12px;margin:22px auto;max-width:520px}
+.lesson-button,button{display:block;background:#0066ff;color:#fff;text-decoration:none;border:none;padding:14px 18px;border-radius:10px;font-size:18px;font-family:Tahoma,sans-serif;cursor:pointer;margin:0 auto;width:100%;max-width:520px;transition:background .2s,transform .2s}
+.lesson-button:hover,button:hover{background:#0044aa;transform:translateY(-2px)}
+.back{display:inline-block;background:#0066ff;color:#fff;text-decoration:none;padding:12px 20px;border-radius:10px;font-size:17px;margin-top:10px}
+.back:hover{background:#0044aa}
+.note{color:#555;font-size:14px;line-height:1.9}
+</style>
+</head>
 <body>
-<header><h1>🎻 آموزش ویولن</h1><p>به بخش آموزش ویولن سایت Araz Game خوش آمدید.</p></header>
+<header>
+<h1>🎻 آموزش ویولن</h1>
+<p>یک موضوع را انتخاب کنید تا فیلم‌های آموزشی آن در صفحه‌ای جداگانه باز شوند.</p>
+</header>
+
 <div class="card">
+<h2>📚 بخش‌های آموزش ویولن</h2>
 <div class="lesson-list">
-<h2>درس‌های آینده</h2>
-<p>🎼 آشنایی با ویولن</p><p>🎵 آموزش نت‌ها</p><p>🎻 طرز صحیح گرفتن ویولن و آرشه</p><p>🎶 تمرین‌های ساده</p>
+<a class="lesson-button" href="violin-videos.html?topic=intro" target="_blank" rel="noopener">🎼 آشنایی با ویولن و اجزای آن</a>
+<a class="lesson-button" href="violin-videos.html?topic=notes" target="_blank" rel="noopener">🎵 آموزش نت‌ها و نت‌خوانی</a>
+<a class="lesson-button" href="violin-videos.html?topic=holding" target="_blank" rel="noopener">🎻 طرز صحیح گرفتن ویولن و آرشه</a>
+<a class="lesson-button" href="violin-videos.html?topic=practice" target="_blank" rel="noopener">🎶 تمرین‌های ساده ویولن</a>
+<a class="lesson-button" href="violin-videos.html?topic=songs" target="_blank" rel="noopener">🎵 آهنگ‌ها</a>
 </div>
+<p class="note">با زدن هر دکمه، صفحهٔ فیلم‌های آموزشی همان موضوع در یک برگهٔ جدید باز می‌شود.</p>
 <hr>
-<button class="back" onclick="location.href='index.html'">🏠 بازگشت به صفحه اصلی</button>
+<a class="back" href="index.html">🏠 بازگشت به صفحه اصلی</a>
 </div>
-</body></html>
+</body>
+</html>
