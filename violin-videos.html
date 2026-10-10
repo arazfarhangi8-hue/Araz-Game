@@ -53,7 +53,7 @@ main{width:calc(100% - 24px);max-width:900px;margin:24px auto}
 <div class="black-screen">▶ تماشا در</div>
 <div class="actions">
 <a id="aparat-button" class="watch-button aparat-button" href="https://www.aparat.com/search?query=%D8%A2%D9%85%D9%88%D8%B2%D8%B4%20%D9%88%DB%8C%D9%88%D9%84%D9%86" target="_blank" rel="noopener noreferrer">▶ آپارات</a>
-<a class="watch-button site-button" href="violin-watch.html">▶ تماشا در سایت Araz Game</a>
+<a id="site-watch-button" class="watch-button site-button" href="violin-watch.html">▶ تماشا در سایت Araz Game</a>
 </div>
 </section>
 
@@ -70,11 +70,11 @@ const OWNER = "arazfarhangi8-hue";
 const REPO = "Araz-Game";
 const FOLDER = "violin-videos";
 const TOPICS = {
- intro:{title:"🎼 آشنایی با ویولن",search:"آموزش آشنایی با ویولن",match:/(آشنایی|معرفی|اجزای|شناخت|intro)/i},
- notes:{title:"🎵 آموزش نت‌ها",search:"آموزش نت خوانی ویولن",match:/(نت|نت‌خوانی|نت خوانی|notes)/i},
- holding:{title:"🎻 طرز صحیح گرفتن ویولن و آرشه",search:"طرز صحیح گرفتن ویولن و آرشه",match:/(آرشه|گرفتن|نگه.?داشتن|holding)/i},
- practice:{title:"🎶 تمرین‌های ساده",search:"تمرین ساده ویولن",match:/(تمرین|مشق|practice)/i},
- songs:{title:"🎵 آهنگ‌ها",search:"آهنگ ساده با ویولن",match:/(آهنگ|قطعه|نوازی|ترانه|songs?)/i}
+ intro:{title:"🎼 آشنایی با ویولن",search:"آموزش آشنایی با ویولن",folder:"ashnaei-ba-violin"},
+ notes:{title:"🎵 آموزش نت‌ها",search:"آموزش نت خوانی ویولن",folder:"amoozesh-net-ha"},
+ holding:{title:"🎻 طرز صحیح گرفتن ویولن و آرشه",search:"طرز صحیح گرفتن ویولن و آرشه",folder:"gereftan-violin-arche"},
+ practice:{title:"🎶 تمرین‌های ساده",search:"تمرین ساده ویولن",folder:"tamrin-haye-sade"},
+ songs:{title:"🎵 آهنگ‌ها",search:"آهنگ ساده با ویولن",folder:"ahang-ha"}
 };
 const params = new URLSearchParams(location.search);
 const topic = params.get("topic") || "all";
@@ -91,6 +91,8 @@ document.querySelectorAll("[data-topic]").forEach(a => {
 
 const searchText = selected ? selected.search : "آموزش ویولن";
 const aparatButton = document.getElementById("aparat-button");
+const siteWatchButton = document.getElementById("site-watch-button");
+siteWatchButton.href = selected ? "violin-watch.html?topic=" + encodeURIComponent(topic) : "violin-watch.html";
 aparatButton.href = "https://www.aparat.com/search?query=" + encodeURIComponent(searchText);
 
 function extractAparatUrl(text) {
@@ -99,20 +101,21 @@ function extractAparatUrl(text) {
 }
 
 async function findAparatVideo() {
+  if (!selected) return;
   try {
-    const response = await fetch("https://api.github.com/repos/" + OWNER + "/" + REPO + "/contents/" + FOLDER + "?ref=main", {cache:"no-store"});
+    const path = FOLDER + "/" + selected.folder;
+    const response = await fetch("https://api.github.com/repos/" + OWNER + "/" + REPO + "/contents/" + path + "?ref=main", {cache:"no-store"});
     if (!response.ok) return;
     const files = await response.json();
     if (!Array.isArray(files)) return;
     const sidecars = files.filter(f => f.type === "file" && /\.aparat\.txt$/i.test(f.name));
-    const suitable = sidecars.find(f => selected && selected.match.test(f.name)) || (!selected ? sidecars[0] : null);
-    if (!suitable) return;
-    const textResponse = await fetch(suitable.download_url, {cache:"no-store"});
+    if (!sidecars.length) return;
+    const textResponse = await fetch(sidecars[0].download_url, {cache:"no-store"});
     if (!textResponse.ok) return;
     const url = extractAparatUrl(await textResponse.text());
     if (url && /aparat\.com/i.test(url)) aparatButton.href = url;
   } catch (_) {
-    // If the folder or link is not available, the button still opens Aparat search.
+    // If no Aparat link is stored, the button still opens the topic's Aparat search.
   }
 }
 findAparatVideo();
