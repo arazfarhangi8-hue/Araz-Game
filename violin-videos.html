@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="فیلم‌های آموزشی ویولن برای آشنایی با ساز، نت‌خوانی، گرفتن ویولن و آرشه، تمرین‌های ساده و آهنگ‌ها.">
+<meta name="description" content="فیلم‌های آموزشی ویولن در آپارات: آشنایی با ساز، نت‌خوانی، گرفتن ویولن و آرشه، تمرین‌های ساده و آهنگ‌ها.">
 <title>فیلم‌های آموزشی ویولن | Araz Game</title>
 <style>
 *{box-sizing:border-box}
@@ -31,12 +31,12 @@ iframe{display:block;width:100%;aspect-ratio:16/9;border:0;border-radius:10px;ba
 <body>
 <header>
 <h1>🎻 فیلم‌های آموزشی ویولن</h1>
-<p>فیلم‌های پیشنهادی برای یادگیری قدم‌به‌قدم ویولن</p>
+<p>فیلم‌های پیشنهادی برای یادگیری قدم‌به‌قدم ویولن در آپارات</p>
 </header>
 <main>
 <section class="intro">
 <h2 id="page-title">فیلم‌های آموزشی ویولن</h2>
-<p>برای پخش هر فیلم، روی دکمهٔ پخش داخل فیلم بزنید. اگر فیلم در این صفحه پخش نشد، از دکمهٔ «تماشا در یوتیوب» استفاده کنید.</p>
+<p>فیلم‌ها از آپارات هستند و داخل همین صفحه نمایش داده می‌شوند. اگر یک فیلم پخش نشد، دکمهٔ آبی «تماشا در آپارات» را بزن.</p>
 </section>
 
 <nav class="topic-menu" aria-label="موضوع‌های آموزش ویولن">
@@ -50,7 +50,7 @@ iframe{display:block;width:100%;aspect-ratio:16/9;border:0;border-radius:10px;ba
 
 <div id="videos" class="videos"></div>
 <div id="extra-link"></div>
-<p class="small">این صفحه فیلم‌های عمومیِ پیشنهادی را از یوتیوب نمایش می‌دهد؛ سازندهٔ هر فیلم در خود یوتیوب مشخص است.</p>
+<p class="small">ویدیوها در آپارات میزبانی می‌شوند؛ نام کانال و سازندهٔ هر فیلم در صفحهٔ آپارات آن مشخص است.</p>
 <div class="back-row">
 <a class="back" href="violin.html">🎻 بازگشت به آموزش ویولن</a>
 <a class="back" href="index.html">🏠 بازگشت به صفحه اصلی</a>
@@ -61,36 +61,41 @@ iframe{display:block;width:100%;aspect-ratio:16/9;border:0;border-radius:10px;ba
 const lessons = {
   intro: {
     title: "🎼 آشنایی با ویولن",
+    search: "آموزش مقدماتی ویولن آشنایی با ساز",
     videos: [
-      {id:"_sQMAkh9NC8", title:"آموزش اصول اولیه ویولن ـ قسمت ۱", by:"مکتب‌خونه"},
-      {id:"ZOAFfQ460Ig", title:"آموزش کامل ویولن ایرانی ـ درس ۱", by:"کانال ساده‌ترین آموزش‌ها"}
+      {id:"penl5z6", title:"آموزش مقدماتی ویولن ـ قسمت اول", by:"آموزشگاه موسیقی شهرآوا"},
+      {id:"z605x4f", title:"آموزش ویولن ـ جلسه اول", by:"آموزشگاه موسیقی شهرآوا"}
     ]
   },
   notes: {
     title: "🎵 آموزش نت‌ها و نت‌خوانی",
+    search: "آموزش نت خوانی ویولن",
     videos: [
-      {id:"r1nwdXDzp7o", title:"آموزش نت‌خوانی ـ جلسه اول", by:"میثم صادق"}
+      {id:"cbqy622", title:"آموزش نت‌خوانی از صفر ـ قسمت اول", by:"آپارات"},
+      {id:"rO2Vg", title:"آموزش نت‌خوانی و بخش‌های مختلف خط موسیقی", by:"آپارات"}
     ]
   },
   holding: {
     title: "🎻 طرز صحیح گرفتن ویولن و آرشه",
+    search: "نحوه صحیح گرفتن ویولن و آرشه",
     videos: [
-      {id:"chQ7GpSrvuM", title:"نحوهٔ صحیح گرفتن ویولن", by:"Amin Salehi - Violin Lessons"},
-      {id:"UDZIdo-lmcU", title:"تمرین آرشه گرفتن ویولن", by:"رضا طریقت"}
+      {id:"ybp55tl", title:"نحوه گرفتن آرشه ویولن", by:"آپارات"},
+      {id:"o7930e9", title:"آموزش جلسه اول و دوم کلاس‌های ویولن؛ گرفتن ساز و آرشه", by:"آپارات"}
     ]
   },
   practice: {
     title: "🎶 تمرین‌های ساده ویولن",
+    search: "تمرین ساده ویولن برای مبتدیان",
     videos: [
-      {id:"rFRSRiU4-S8", title:"آموزش ویولن به زبان ساده", by:"Alijalali_art"},
-      {id:"UDZIdo-lmcU", title:"تمرین آرشه گرفتن ویولن", by:"رضا طریقت"}
+      {id:"k944a1h", title:"آموزش ساز ویولن ـ جلسه اول", by:"آپارات"},
+      {id:"j1405q6", title:"آموزش ساز ویولن ـ جلسه سوم", by:"آپارات"}
     ]
   },
   songs: {
-    title: "🎵 آهنگ‌ها",
+    title: "🎵 آهنگ‌ها و اجرای ویولن",
+    search: "آموزش آهنگ ساده با ویولن",
     videos: [
-      {id:"_sQMAkh9NC8", title:"دورهٔ مقدماتی ویولن و شروع یادگیری ساز", by:"مکتب‌خونه"},
-      {id:"rFRSRiU4-S8", title:"آموزش ویولن به زبان ساده", by:"Alijalali_art"}
+      {id:"wom1g7q", title:"ویولن‌نوازی کلاسیک", by:"آپارات"}
     ]
   }
 };
@@ -118,22 +123,24 @@ groups.forEach(group => {
     heading.textContent = video.title;
     const by = document.createElement("p");
     by.className = "small";
-    by.textContent = "منبع: " + video.by;
+    by.textContent = "منبع: " + video.by + " | آپارات";
     const frame = document.createElement("iframe");
-    frame.src = "https://www.youtube-nocookie.com/embed/" + encodeURIComponent(video.id);
+    frame.src = "https://www.aparat.com/video/video/embed/videohash/" + encodeURIComponent(video.id) + "/vt/frame";
     frame.title = video.title;
     frame.loading = "lazy";
     frame.referrerPolicy = "strict-origin-when-cross-origin";
-    frame.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
-    frame.allowFullscreen = true;
+    frame.allow = "autoplay; encrypted-media; picture-in-picture; web-share";
+    frame.setAttribute("allowfullscreen","");
+    frame.setAttribute("webkitallowfullscreen","");
+    frame.setAttribute("mozallowfullscreen","");
     const actions = document.createElement("div");
     actions.className = "video-actions";
     const open = document.createElement("a");
     open.className = "open-video";
-    open.href = "https://www.youtube.com/watch?v=" + encodeURIComponent(video.id);
+    open.href = "https://www.aparat.com/v/" + encodeURIComponent(video.id);
     open.target = "_blank";
-    open.rel = "noopener";
-    open.textContent = "▶ تماشا در یوتیوب";
+    open.rel = "noopener noreferrer";
+    open.textContent = "▶ تماشا در آپارات";
     actions.appendChild(open);
     card.appendChild(heading);
     card.appendChild(by);
@@ -143,11 +150,11 @@ groups.forEach(group => {
   });
 });
 
-if (topic === "songs") {
-  const extra = document.getElementById("extra-link");
-  extra.className = "message";
-  extra.innerHTML = '<b>فیلم‌های بیشتر برای آموزش آهنگ با ویولن</b><br><a class="search-link" href="https://www.youtube.com/results?search_query=%D8%A2%D9%85%D9%88%D8%B2%D8%B4+%D8%A2%D9%87%D9%86%DA%AF+%D8%B3%D8%A7%D8%AF%D9%87+%D8%A8%D8%A7+%D9%88%DB%8C%D9%88%D9%84%D9%86" target="_blank" rel="noopener">جست‌وجوی آموزش آهنگ‌های ویولن</a>';
-}
+const searchText = chosen ? chosen.search : "آموزش ویولن";
+const extra = document.getElementById("extra-link");
+extra.className = "message";
+const searchUrl = "https://www.aparat.com/search?query=" + encodeURIComponent(searchText);
+extra.innerHTML = '<b>فیلم‌های بیشتر دربارهٔ این موضوع</b><br><a class="search-link" href="' + searchUrl + '" target="_blank" rel="noopener noreferrer">🔎 جست‌وجوی فیلم‌های بیشتر در آپارات</a>';
 </script>
 </body>
 </html>
