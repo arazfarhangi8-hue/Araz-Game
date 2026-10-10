@@ -139,10 +139,13 @@ function makeScreen(card, message) {
 }
 
 function showLocalVideo(card, entry) {
-  const screen = makeScreen(card, "");
+  const screen = card.querySelector(".screen");
+  screen.replaceChildren();
   if (!entry.siteUrl) {
-    screen.firstChild.className = "screen-message";
-    screen.firstChild.textContent = "فایل این فیلم هنوز در پوشهٔ سایت قرار نگرفته است.";
+    const message = document.createElement("div");
+    message.className = "screen-message";
+    message.textContent = "فایل این فیلم هنوز در پوشهٔ سایت قرار نگرفته است.";
+    screen.appendChild(message);
     return;
   }
   const video = document.createElement("video");
@@ -157,10 +160,13 @@ function showLocalVideo(card, entry) {
 }
 
 function showAparatVideo(card, entry) {
-  const screen = makeScreen(card, "");
+  const screen = card.querySelector(".screen");
+  screen.replaceChildren();
   if (!entry.aparatUrl) {
-    screen.firstChild.className = "screen-message";
-    screen.firstChild.textContent = "لینک آپارات برای این فیلم ثبت نشده است. باید فیلم را در آپارات هم منتشر کنی و لینک آن را در فایل راهنمای همان ویدیو قرار بدهی.";
+    const message = document.createElement("div");
+    message.className = "screen-message";
+    message.textContent = "لینک آپارات برای این فیلم ثبت نشده است. باید فیلم را در آپارات هم منتشر کنی و لینک آن را در فایل راهنمای همان ویدیو قرار بدهی.";
+    screen.appendChild(message);
     return;
   }
   const id = extractAparatId(entry.aparatUrl);
@@ -174,8 +180,10 @@ function showAparatVideo(card, entry) {
     iframe.referrerPolicy = "strict-origin-when-cross-origin";
     screen.appendChild(iframe);
   } else {
-    screen.firstChild.className = "screen-message";
-    screen.firstChild.textContent = "برای این لینک، نمایش داخل صفحه ممکن نشد. از لینک آپارات زیر استفاده کن.";
+    const message = document.createElement("div");
+    message.className = "screen-message";
+    message.textContent = "برای این لینک، نمایش داخل صفحه ممکن نشد. از لینک آپارات زیر استفاده کن.";
+    screen.appendChild(message);
     const link = document.createElement("a");
     link.href = entry.aparatUrl;
     link.target = "_blank";
