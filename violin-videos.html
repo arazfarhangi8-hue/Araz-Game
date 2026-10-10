@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="فیلم‌های آموزشی ویولن برای آشنایی با ساز، نت‌خوانی، گرفتن ویولن و آرشه، تمرین‌های ساده و آهنگ‌ها.">
+<title>فیلم‌های آموزشی ویولن | Araz Game</title>
+<style>
+*{box-sizing:border-box}
+body{font-family:Tahoma,sans-serif;background:#f5f9ff;text-align:center;margin:0;color:#172033;line-height:1.8}
+header{background:linear-gradient(90deg,#0066ff,#fff,#ff3333);padding:22px 14px}
+header h1{margin:4px 0 8px}
+main{width:calc(100% - 24px);max-width:1000px;margin:24px auto}
+.intro,.video-card,.topic-menu{background:#fff;border-radius:15px;box-shadow:0 0 10px #ddd;padding:18px;margin:16px auto}
+.topic-menu{display:flex;flex-wrap:wrap;justify-content:center;gap:9px}
+.topic-menu a,.back,.open-video,.search-link{display:inline-block;text-decoration:none;background:#0066ff;color:#fff;border-radius:9px;padding:10px 15px;font-size:15px;font-family:Tahoma,sans-serif}
+.topic-menu a:hover,.back:hover,.open-video:hover,.search-link:hover{background:#0044aa}
+.topic-menu a.active{background:#003b99;outline:3px solid #b9d4ff}
+.videos{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:16px}
+.video-card{text-align:right;margin:0}
+.video-card h3{font-size:18px;margin:0 0 12px}
+iframe{display:block;width:100%;aspect-ratio:16/9;border:0;border-radius:10px;background:#111}
+.video-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.open-video{font-size:14px}
+.message{background:#fff4d6;border-radius:10px;padding:14px;margin:15px auto}
+.back-row{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin:24px 0}
+.back{font-size:16px}
+.small{font-size:13px;color:#555}
+</style>
+</head>
+<body>
+<header>
+<h1>🎻 فیلم‌های آموزشی ویولن</h1>
+<p>فیلم‌های پیشنهادی برای یادگیری قدم‌به‌قدم ویولن</p>
+</header>
+<main>
+<section class="intro">
+<h2 id="page-title">فیلم‌های آموزشی ویولن</h2>
+<p>برای پخش هر فیلم، روی دکمهٔ پخش داخل فیلم بزنید. اگر فیلم در این صفحه پخش نشد، از دکمهٔ «تماشا در یوتیوب» استفاده کنید.</p>
+</section>
+
+<nav class="topic-menu" aria-label="موضوع‌های آموزش ویولن">
+<a href="violin-videos.html?topic=intro" data-topic="intro">🎼 آشنایی با ویولن</a>
+<a href="violin-videos.html?topic=notes" data-topic="notes">🎵 آموزش نت‌ها</a>
+<a href="violin-videos.html?topic=holding" data-topic="holding">🎻 گرفتن ویولن و آرشه</a>
+<a href="violin-videos.html?topic=practice" data-topic="practice">🎶 تمرین‌های ساده</a>
+<a href="violin-videos.html?topic=songs" data-topic="songs">🎵 آهنگ‌ها</a>
+<a href="violin-videos.html" data-topic="all">همهٔ فیلم‌ها</a>
+</nav>
+
+<div id="videos" class="videos"></div>
+<div id="extra-link"></div>
+<p class="small">این صفحه فیلم‌های عمومیِ پیشنهادی را از یوتیوب نمایش می‌دهد؛ سازندهٔ هر فیلم در خود یوتیوب مشخص است.</p>
+<div class="back-row">
+<a class="back" href="violin.html">🎻 بازگشت به آموزش ویولن</a>
+<a class="back" href="index.html">🏠 بازگشت به صفحه اصلی</a>
+</div>
+</main>
+
+<script>
+const lessons = {
+  intro: {
+    title: "🎼 آشنایی با ویولن",
+    videos: [
+      {id:"_sQMAkh9NC8", title:"آموزش اصول اولیه ویولن ـ قسمت ۱", by:"مکتب‌خونه"},
+      {id:"ZOAFfQ460Ig", title:"آموزش کامل ویولن ایرانی ـ درس ۱", by:"کانال ساده‌ترین آموزش‌ها"}
+    ]
+  },
+  notes: {
+    title: "🎵 آموزش نت‌ها و نت‌خوانی",
+    videos: [
+      {id:"r1nwdXDzp7o", title:"آموزش نت‌خوانی ـ جلسه اول", by:"میثم صادق"}
+    ]
+  },
+  holding: {
+    title: "🎻 طرز صحیح گرفتن ویولن و آرشه",
+    videos: [
+      {id:"chQ7GpSrvuM", title:"نحوهٔ صحیح گرفتن ویولن", by:"Amin Salehi - Violin Lessons"},
+      {id:"UDZIdo-lmcU", title:"تمرین آرشه گرفتن ویولن", by:"رضا طریقت"}
+    ]
+  },
+  practice: {
+    title: "🎶 تمرین‌های ساده ویولن",
+    videos: [
+      {id:"rFRSRiU4-S8", title:"آموزش ویولن به زبان ساده", by:"Alijalali_art"},
+      {id:"UDZIdo-lmcU", title:"تمرین آرشه گرفتن ویولن", by:"رضا طریقت"}
+    ]
+  },
+  songs: {
+    title: "🎵 آهنگ‌ها",
+    videos: [
+      {id:"_sQMAkh9NC8", title:"دورهٔ مقدماتی ویولن و شروع یادگیری ساز", by:"مکتب‌خونه"},
+      {id:"rFRSRiU4-S8", title:"آموزش ویولن به زبان ساده", by:"Alijalali_art"}
+    ]
+  }
+};
+
+const params = new URLSearchParams(window.location.search);
+const topic = params.get("topic") || "all";
+const chosen = lessons[topic];
+document.getElementById("page-title").textContent = chosen ? chosen.title : "🎻 همهٔ فیلم‌های آموزشی ویولن";
+document.title = (chosen ? chosen.title.replace(/[🎼🎵🎻🎶]/g,"").trim() : "همهٔ فیلم‌ها") + " | Araz Game";
+
+document.querySelectorAll("[data-topic]").forEach(link => {
+  if ((link.dataset.topic === topic) || (topic === "all" && link.dataset.topic === "all")) {
+    link.classList.add("active");
+    link.setAttribute("aria-current","page");
+  }
+});
+
+const groups = chosen ? [chosen] : Object.values(lessons);
+const container = document.getElementById("videos");
+groups.forEach(group => {
+  group.videos.forEach(video => {
+    const card = document.createElement("article");
+    card.className = "video-card";
+    const heading = document.createElement("h3");
+    heading.textContent = video.title;
+    const by = document.createElement("p");
+    by.className = "small";
+    by.textContent = "منبع: " + video.by;
+    const frame = document.createElement("iframe");
+    frame.src = "https://www.youtube-nocookie.com/embed/" + encodeURIComponent(video.id);
+    frame.title = video.title;
+    frame.loading = "lazy";
+    frame.referrerPolicy = "strict-origin-when-cross-origin";
+    frame.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+    frame.allowFullscreen = true;
+    const actions = document.createElement("div");
+    actions.className = "video-actions";
+    const open = document.createElement("a");
+    open.className = "open-video";
+    open.href = "https://www.youtube.com/watch?v=" + encodeURIComponent(video.id);
+    open.target = "_blank";
+    open.rel = "noopener";
+    open.textContent = "▶ تماشا در یوتیوب";
+    actions.appendChild(open);
+    card.appendChild(heading);
+    card.appendChild(by);
+    card.appendChild(frame);
+    card.appendChild(actions);
+    container.appendChild(card);
+  });
+});
+
+if (topic === "songs") {
+  const extra = document.getElementById("extra-link");
+  extra.className = "message";
+  extra.innerHTML = '<b>فیلم‌های بیشتر برای آموزش آهنگ با ویولن</b><br><a class="search-link" href="https://www.youtube.com/results?search_query=%D8%A2%D9%85%D9%88%D8%B2%D8%B4+%D8%A2%D9%87%D9%86%DA%AF+%D8%B3%D8%A7%D8%AF%D9%87+%D8%A8%D8%A7+%D9%88%DB%8C%D9%88%D9%84%D9%86" target="_blank" rel="noopener">جست‌وجوی آموزش آهنگ‌های ویولن</a>';
+}
+</script>
+</body>
+</html>
