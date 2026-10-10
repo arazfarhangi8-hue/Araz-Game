@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="تماشای همهٔ فیلم‌های آموزش ویولن منتشرشده در سایت Araz Game.">
+<title>تماشا در سایت Araz Game | آموزش ویولن</title>
+<style>
+*{box-sizing:border-box}
+body{font-family:Tahoma,sans-serif;background:#f5f9ff;text-align:center;margin:0;color:#172033;line-height:1.8}
+header{background:linear-gradient(90deg,#0066ff,#fff,#ff3333);padding:22px 14px}
+main{width:calc(100% - 24px);max-width:1000px;margin:24px auto}
+.intro,.video-card{background:#fff;border-radius:15px;box-shadow:0 0 10px #ddd;padding:18px;margin:16px auto}
+.videos{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:16px}
+.video-card{text-align:right;margin:0}
+.video-card h2{font-size:19px;margin:0 0 12px;overflow-wrap:anywhere}
+video{display:block;width:100%;aspect-ratio:16/9;background:#000;border-radius:10px;object-fit:contain}
+.empty-screen{width:100%;max-width:800px;aspect-ratio:16/9;margin:16px auto;background:#050505;border-radius:10px;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px;font-size:clamp(19px,3vw,28px);font-weight:bold}
+.back-row{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin:24px 0}
+.back{display:inline-block;text-decoration:none;background:#0066ff;color:#fff;border-radius:9px;padding:12px 17px;font-size:16px}
+.back:hover{background:#0044aa}
+.small{color:#555;font-size:13px}
+</style>
+</head>
+<body>
+<header>
+<h1>🎻 تماشا در سایت Araz Game</h1>
+<p>همهٔ فیلم‌های ویولنی که در پوشهٔ سایت منتشر کرده‌ای، اینجا نمایش داده می‌شوند.</p>
+</header>
+<main>
+<section class="intro">
+<h2>🎬 همهٔ ویدیوها</h2>
+<p>به‌محض اینکه یک فایل ویدیویی را در پوشهٔ <b>violin-videos</b> گیت‌هاب قرار بدهی و تغییرات را ثبت کنی، سایت آن را به فهرست اضافه می‌کند.</p>
+</section>
+<div id="videos" class="videos"></div>
+<div class="back-row">
+<a class="back" href="violin-videos.html">↩ بازگشت به فیلم‌های آموزشی</a>
+<a class="back" href="violin.html">🎻 بازگشت به آموزش ویولن</a>
+<a class="back" href="index.html">🏠 بازگشت به صفحه اصلی</a>
+</div>
+</main>
+<script>
+const OWNER = "arazfarhangi8-hue";
+const REPO = "Araz-Game";
+const FOLDER = "violin-videos";
+const BRANCH = "main";
+const container = document.getElementById("videos");
+
+function getTitle(filename) {
+  return filename
+    .replace(/\.(mp4|webm|ogg|m4v|mov)$/i, "")
+    .replace(/[_-]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+function getSiteVideoUrl(filename) {
+  return "https://" + OWNER + ".github.io/" + REPO + "/" + FOLDER + "/" +
+    filename.split("/").map(part => encodeURIComponent(part)).join("/");
+}
+function showEmpty() {
+  container.replaceChildren();
+  const empty = document.createElement("div");
+  empty.className = "empty-screen";
+  empty.textContent = "ویدیویی آپلود نشده است";
+  container.appendChild(empty);
+}
+async function loadVideos() {
+  showEmpty();
+  try {
+    const url = "https://api.github.com/repos/" + OWNER + "/" + REPO + "/contents/" + FOLDER + "?ref=" + BRANCH;
+    const response = await fetch(url, {cache:"no-store"});
+    if (!response.ok) throw new Error("Could not read videos folder");
+    const files = await response.json();
+    if (!Array.isArray(files)) throw new Error("Invalid folder listing");
+    const videos = files
+      .filter(file => file.type === "file" && /\.(mp4|webm|ogg|m4v|mov)$/i.test(file.name))
+      .sort((a,b) => a.name.localeCompare(b.name,"fa"));
+    if (!videos.length) {
+      showEmpty();
+      return;
+    }
+    container.replaceChildren();
+    videos.forEach(file => {
+      const card = document.createElement("article");
+      card.className = "video-card";
+      const title = document.createElement("h2");
+      title.textContent = "🎬 " + getTitle(file.name);
+      const player = document.createElement("video");
+      player.controls = true;
+      player.preload = "metadata";
+      player.playsInline = true;
+      player.src = getSiteVideoUrl(file.name);
+      player.setAttribute("aria-label", getTitle(file.name));
+      const note = document.createElement("p");
+      note.className = "small";
+      note.textContent = "ویدیوی منتشرشده در سایت Araz Game";
+      card.append(title, player, note);
+      container.appendChild(card);
+    });
+  } catch (_) {
+    showEmpty();
+    const note = document.createElement("p");
+    note.className = "small";
+    note.textContent = "فهرست ویدیوها بارگذاری نشد. اتصال اینترنت یا پوشهٔ violin-videos را بررسی کن.";
+    container.appendChild(note);
+  }
+}
+loadVideos();
+</script>
+</body>
+</html>
