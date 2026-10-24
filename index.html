@@ -254,16 +254,21 @@ function translateArazGame(language){
     return;
   }
   /*
-   * بستهٔ ترجمهٔ انگلیسی داخل همین فایل است. برای زبان‌هایی که هنوز
-   * واژه‌نامهٔ جداگانه ندارند، از انگلیسی استفاده می‌شود؛ هیچ پنجرهٔ خطا
-   * یا سرویس گوگلی باز نمی‌شود.
+   * ترجمه فقط داخل همین صفحه انجام می‌شود. فعلاً فقط برای انگلیسی
+   * واژه‌نامهٔ واقعی داریم؛ برای زبان‌های دیگر متن فارسی را به انگلیسی
+   * تبدیل نمی‌کنیم و هیچ سرویس خارجی فراخوانی نمی‌شود.
    */
-  arazOriginalTexts.forEach(function(item){
-    var trimmed = item.text.trim();
-    if(arazEnglish[trimmed]) item.node.nodeValue = item.text.replace(trimmed,arazEnglish[trimmed]);
-  });
-  document.documentElement.lang = language;
-  document.documentElement.dir = ["ar","ur","he","fa"].indexOf(language) !== -1 ? "rtl" : "ltr";
+  if(language === "en"){
+    arazOriginalTexts.forEach(function(item){
+      var trimmed = item.text.trim();
+      if(arazEnglish[trimmed]) item.node.nodeValue = item.text.replace(trimmed,arazEnglish[trimmed]);
+    });
+    document.documentElement.lang = "en";
+    document.documentElement.dir = "ltr";
+  } else {
+    document.documentElement.lang = language;
+    document.documentElement.dir = ["ar","ur","he","fa"].indexOf(language) !== -1 ? "rtl" : "ltr";
+  }
   try { localStorage.setItem("araz-game-language", language); } catch(e) {}
 }
 document.addEventListener("DOMContentLoaded", function(){
