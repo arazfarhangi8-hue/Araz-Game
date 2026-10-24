@@ -223,7 +223,7 @@ footer{
 </footer>
 
 <script>
-/* ترجمهٔ داخلی صفحهٔ اصلی؛ بدون گوگل و بدون سرویس خارجی */
+/* ترجمهٔ داخل خود سایت؛ بدون گوگل و بدون سرویس خارجی */
 var arazOriginalTexts = null;
 var arazEnglish = {
 "🏠 خانه":"🏠 Home","👤 درباره من":"👤 About me","☎ تماس با ما":"☎ Contact us",
@@ -242,7 +242,7 @@ function translateArazGame(language){
     arazOriginalTexts = [];
     var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
     var node;
-    while(node = walker.nextNode()){
+    while((node = walker.nextNode())){
       if(node.nodeValue.trim()) arazOriginalTexts.push({node:node,text:node.nodeValue});
     }
   }
@@ -250,21 +250,32 @@ function translateArazGame(language){
   if(language === "fa"){
     document.documentElement.lang = "fa";
     document.documentElement.dir = "rtl";
+    try { localStorage.setItem("araz-game-language", "fa"); } catch(e) {}
     return;
   }
-  if(language !== "en"){
-    alert("ترجمهٔ داخلی این زبان هنوز آماده نشده است. برای جلوگیری از خطای گوگل، فعلاً زبان فارسی و انگلیسی بدون سرویس خارجی کار می‌کنند. زبان‌ها حذف نشده‌اند.");
-    document.getElementById("site-language").value = "";
-    return;
-  }
+  /*
+   * بستهٔ ترجمهٔ انگلیسی داخل همین فایل است. برای زبان‌هایی که هنوز
+   * واژه‌نامهٔ جداگانه ندارند، از انگلیسی استفاده می‌شود؛ هیچ پنجرهٔ خطا
+   * یا سرویس گوگلی باز نمی‌شود.
+   */
   arazOriginalTexts.forEach(function(item){
     var trimmed = item.text.trim();
     if(arazEnglish[trimmed]) item.node.nodeValue = item.text.replace(trimmed,arazEnglish[trimmed]);
   });
-  document.documentElement.lang = "en";
-  document.documentElement.dir = "ltr";
+  document.documentElement.lang = language;
+  document.documentElement.dir = ["ar","ur","he","fa"].indexOf(language) !== -1 ? "rtl" : "ltr";
+  try { localStorage.setItem("araz-game-language", language); } catch(e) {}
 }
-</script>
+document.addEventListener("DOMContentLoaded", function(){
+  var select = document.getElementById("site-language");
+  if(!select) return;
+  var saved = "";
+  try { saved = localStorage.getItem("araz-game-language") || ""; } catch(e) {}
+  if(saved && Array.prototype.some.call(select.options, function(option){ return option.value === saved; })){
+    select.value = saved;
+    translateArazGame(saved);
+  }
+});</script>
 </body>
 
 </html>
