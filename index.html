@@ -223,25 +223,46 @@ footer{
 </footer>
 
 <script>
+/* ترجمهٔ داخلی صفحهٔ اصلی؛ بدون گوگل و بدون سرویس خارجی */
+var arazOriginalTexts = null;
+var arazEnglish = {
+"🏠 خانه":"🏠 Home","👤 درباره من":"👤 About me","☎ تماس با ما":"☎ Contact us",
+"🌐 تغییر زبان سایت:":"🌐 Website language:","🎮 آرازگیم | ArazGame 🎲":"🎮 Araz Game 🎲",
+"بازی‌های آموزشی، درسی و ویولن و فکری":"Educational, school, violin and brain games",
+"👋 سلام!":"👋 Hello!","به سایت آراز گیم (Araz Game) خوش آمدید.":"Welcome to Araz Game.",
+"اینجا می‌توانید بازی‌های آموزشی، درسی و فکری را انجام دهید و در آینده آموزش‌های ویلن را نیز مشاهده کنید.":"Play educational, school and brain games here. Violin lessons will be added in the future.",
+"🧠 بازی‌های فکری":"🧠 Brain games","پازل، معما، حافظه و تمرکز":"Puzzles, riddles, memory and focus",
+"📚 بازی‌های درسی":"📚 School games","ریاضی، علوم و یادگیری همراه با بازی":"Math, science and learning through games",
+"🎻 آموزش ویولن":"🎻 Violin lessons","آموزش دست گرفتن ویولن، آموزش دست گرفتن آرشه":"Learn how to hold the violin and bow",
+"🎮 شروع بازی":"🎮 Start playing","— انتخاب زبان —":"— Select language —"
+};
 function translateArazGame(language){
   if(!language) return;
-
+  if(!arazOriginalTexts){
+    arazOriginalTexts = [];
+    var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+    var node;
+    while(node = walker.nextNode()){
+      if(node.nodeValue.trim()) arazOriginalTexts.push({node:node,text:node.nodeValue});
+    }
+  }
+  arazOriginalTexts.forEach(function(item){ item.node.nodeValue = item.text; });
   if(language === "fa"){
-    window.location.assign("https://arazfarhangi8-hue.github.io/Araz-Game/");
+    document.documentElement.lang = "fa";
+    document.documentElement.dir = "rtl";
     return;
   }
-
-  /*
-    Use Google's translated-site proxy instead of the older
-    translate.google.com/translate endpoint that can return HTTP 400.
-  */
-  var translatedHost = "arazfarhangi8-hue-github-io.translate.goog";
-  var currentPath = window.location.pathname;
-  var translatedUrl = "https://" + translatedHost + currentPath +
-    "?_x_tr_sl=fa&_x_tr_tl=" + encodeURIComponent(language) +
-    "&_x_tr_hl=" + encodeURIComponent(language);
-
-  window.location.assign(translatedUrl);
+  if(language !== "en"){
+    alert("ترجمهٔ داخلی این زبان هنوز آماده نشده است. برای جلوگیری از خطای گوگل، فعلاً زبان فارسی و انگلیسی بدون سرویس خارجی کار می‌کنند. زبان‌ها حذف نشده‌اند.");
+    document.getElementById("site-language").value = "";
+    return;
+  }
+  arazOriginalTexts.forEach(function(item){
+    var trimmed = item.text.trim();
+    if(arazEnglish[trimmed]) item.node.nodeValue = item.text.replace(trimmed,arazEnglish[trimmed]);
+  });
+  document.documentElement.lang = "en";
+  document.documentElement.dir = "ltr";
 }
 </script>
 </body>
