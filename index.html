@@ -225,9 +225,21 @@ footer{
 <script>
 function translateArazGame(language){
   if(!language) return;
+
   var site = "https://arazfarhangi8-hue.github.io/Araz-Game/";
-  if(language === "fa"){ window.location.href = site; return; }
-  window.location.href = "https://translate.google.com/translate?sl=fa&tl=" + encodeURIComponent(language) + "&u=" + encodeURIComponent(site);
+
+  if(language === "fa"){
+    window.location.assign(site);
+    return;
+  }
+
+  /* باز کردن ترجمهٔ سایت با نشانی کامل و کد زبان انتخاب‌شده */
+  var translateUrl = "https://translate.google.com/translate?hl=" +
+    encodeURIComponent(language) +
+    "&sl=auto&tl=" + encodeURIComponent(language) +
+    "&u=" + encodeURIComponent(site);
+
+  window.location.assign(translateUrl);
 }
 </script>
 </body>
