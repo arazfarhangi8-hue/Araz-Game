@@ -226,20 +226,22 @@ footer{
 function translateArazGame(language){
   if(!language) return;
 
-  var site = "https://arazfarhangi8-hue.github.io/Araz-Game/";
-
   if(language === "fa"){
-    window.location.assign(site);
+    window.location.assign("https://arazfarhangi8-hue.github.io/Araz-Game/");
     return;
   }
 
-  /* باز کردن ترجمهٔ سایت با نشانی کامل و کد زبان انتخاب‌شده */
-  var translateUrl = "https://translate.google.com/translate?hl=" +
-    encodeURIComponent(language) +
-    "&sl=auto&tl=" + encodeURIComponent(language) +
-    "&u=" + encodeURIComponent(site);
+  /*
+    Use Google's translated-site proxy instead of the older
+    translate.google.com/translate endpoint that can return HTTP 400.
+  */
+  var translatedHost = "arazfarhangi8-hue-github-io.translate.goog";
+  var currentPath = window.location.pathname;
+  var translatedUrl = "https://" + translatedHost + currentPath +
+    "?_x_tr_sl=fa&_x_tr_tl=" + encodeURIComponent(language) +
+    "&_x_tr_hl=" + encodeURIComponent(language);
 
-  window.location.assign(translateUrl);
+  window.location.assign(translatedUrl);
 }
 </script>
 </body>
