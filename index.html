@@ -78,11 +78,7 @@ body{
     font-size:16px;
     font-weight:bold;
 }
-#google_translate_element{display:inline-block;}
-.goog-te-gadget{font-family:Tahoma,sans-serif!important;font-size:14px!important;}
-.goog-te-gadget .goog-te-combo{padding:8px;border:2px solid #0066ff;border-radius:8px;font-size:15px;max-width:90vw;}
-.goog-logo-link,.goog-te-gadget span{display:none!important;}
-.goog-te-banner-frame{max-width:100%!important;}
+#site-language{padding:9px 12px;border:2px solid #0066ff;border-radius:8px;font-family:Tahoma,sans-serif;font-size:15px;max-width:90vw;background:white;color:#222;}
 
 header{
     background:linear-gradient(90deg,#0066ff,#ffffff,#ff3333);
@@ -151,7 +147,10 @@ footer{
 <a href="index.html">🏠 خانه</a>
 <a href="about.html">👤 درباره من</a>
 <a href="contact.html">☎ تماس با ما</a>
-<div class="language-box"><span>🌐 تغییر زبان سایت:</span><div id="google_translate_element"></div></div>
+<div class="language-box"><label for="site-language">🌐 تغییر زبان سایت:</label>
+<select id="site-language" aria-label="انتخاب زبان سایت" onchange="translateArazGame(this.value)">
+<option value="">— انتخاب زبان —</option><option value="en">English — انگلیسی</option><option value="fa">فارسی</option><option value="ar">العربية — عربی</option><option value="tr">Türkçe — ترکی</option><option value="es">Español — اسپانیایی</option><option value="fr">Français — فرانسوی</option><option value="de">Deutsch — آلمانی</option><option value="it">Italiano — ایتالیایی</option><option value="pt">Português — پرتغالی</option><option value="ru">Русский — روسی</option><option value="zh-CN">中文（简体）— چینی</option><option value="ja">日本語 — ژاپنی</option><option value="ko">한국어 — کره‌ای</option><option value="hi">हिन्दी — هندی</option><option value="ur">اردو — اردو</option><option value="nl">Nederlands — هلندی</option><option value="el">Ελληνικά — یونانی</option><option value="pl">Polski — لهستانی</option><option value="sv">Svenska — سوئدی</option><option value="uk">Українська — اوکراینی</option><option value="id">Bahasa Indonesia — اندونزیایی</option><option value="vi">Tiếng Việt — ویتنامی</option><option value="th">ไทย — تایلندی</option><option value="he">עברית — عبری</option><option value="bn">বাংলা — بنگالی</option>
+</select></div>
 </div>
 
 <header>
@@ -223,12 +222,14 @@ footer{
 
 </footer>
 
-<script type="text/javascript">
-function googleTranslateElementInit(){
-  new google.translate.TranslateElement({pageLanguage:"fa",autoDisplay:false, includedLanguages:"af,sq,am,ar,hy,az,eu,be,bn,bs,bg,my,ca,zh-CN,zh-TW,co,hr,cs,da,nl,en,eo,et,tl,fi,fr,fy,gl,ka,de,el,gu,ht,ha,haw,he,hi,hmn,hu,is,ig,id,ga,it,ja,jw,kn,kk,km,ko,ku,ky,lo,la,lv,lt,lb,mk,mg,ms,ml,mt,mi,mr,mn,ne,no,ny,ps,fa,pl,pt,pa,ro,ru,sm,gd,sr,st,sd,si,sk,sl,so,es,su,sw,sv,tg,ta,te,th,tr,uk,ur,uz,vi,cy,xh,yi,yo,zu"}, "google_translate_element");
+<script>
+function translateArazGame(language){
+  if(!language) return;
+  var site = "https://arazfarhangi8-hue.github.io/Araz-Game/";
+  if(language === "fa"){ window.location.href = site; return; }
+  window.location.href = "https://translate.google.com/translate?sl=fa&tl=" + encodeURIComponent(language) + "&u=" + encodeURIComponent(site);
 }
 </script>
-<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 
 </html>
